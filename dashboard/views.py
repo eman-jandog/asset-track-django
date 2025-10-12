@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponse
+from django.http import JsonResponse
 from django.views.generic import TemplateView
 from .models import Asset, Order
 from . import forms
@@ -48,13 +48,26 @@ def orders(request):
 def assets(request):
     return render(request, 'dashboard/sections/assets.html')
 
-def asset_form(request):
-    
+def assets_form(request):
     if request.method == 'POST':
         form = forms.AssetForm(request.POST)
         if form.is_valid():
             form.save()
-            
+            return JsonResponse({'message': 'Success!'}, status=201)
+    else:
+        form = forms.AssetForm()
+    return render(request, 'dashboard/forms/asset_form.html', {'form': form})
+
+def assets_form_update(request, id):
+    asset = Asset.objects.get(id=id)
+    if request.method == 'POST':
+        form = forms.AssetForm(request.POST, instance=asset)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'message': 'Success!'}, status=200)
+    else:
+        form = forms.AssetForm(instance=asset)
+    return render(request, 'dashboard/forms/asset_form.html', {'form': form})
 
 @login_required
 def _staff(request):

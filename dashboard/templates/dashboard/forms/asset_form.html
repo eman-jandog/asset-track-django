@@ -1,103 +1,107 @@
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Asset Name *</label>
-                            <input type="text" name="assetName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" placeholder="e.g., MacBook Pro 16">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Asset ID</label>
-                            <input type="text" name="assetId" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" placeholder="Auto-generated if empty">
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Category *</label>
-                            <select name="category" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
-                                <option value="">Select Category</option>
-                                <option value="Laptop">Laptop</option>
-                                <option value="Monitor">Monitor</option>
-                                <option value="Mobile">Mobile Device</option>
-                                <option value="Printer">Printer</option>
-                                <option value="Tablet">Tablet</option>
-                                <option value="Accessory">Accessory</option>
-                                <option value="Furniture">Furniture</option>
-                                <option value="Network">Network Equipment</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Brand/Manufacturer</label>
-                            <input type="text" name="brand" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" placeholder="e.g., Apple, Dell, HP">
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Assign to Employee</label>
-                            <select name="assignee" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
-                                <option value="">Unassigned</option>
-                                <option value="Sarah Johnson">Sarah Johnson (IT)</option>
-                                <option value="Mike Chen">Mike Chen (Marketing)</option>
-                                <option value="Emily Davis">Emily Davis (Finance)</option>
-                                <option value="James Wilson">James Wilson (Operations)</option>
-                                <option value="Lisa Brown">Lisa Brown (HR)</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Serial Number</label>
-                            <input type="text" name="serialNumber" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" placeholder="Serial number">
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Purchase Price *</label>
-                            <input type="number" name="purchasePrice" required min="0" step="0.01" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" placeholder="0.00">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Purchase Date</label>
-                            <input type="date" name="purchaseDate" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Location</label>
-                            <input type="text" name="location" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" placeholder="e.g., IT Department, Floor 2">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
-                            <select name="status" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
-                                <option value="">Select Status</option>
-                                <option value="Available">Available</option>
-                                <option value="In Use">In Use</option>
-                                <option value="Maintenance">Under Maintenance</option>
-                                <option value="Retired">Retired</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Warranty Expiry</label>
-                            <input type="date" name="warrantyExpiry" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Supplier</label>
-                            <input type="text" name="supplier" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" placeholder="Supplier name">
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Description/Notes</label>
-                        <textarea name="description" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" placeholder="Additional details about the asset..."></textarea>
-                    </div>
-                    
-                    <div class="flex items-center space-x-3">
-                        <input type="checkbox" name="trackDepreciation" id="trackDepreciation" class="rounded border-gray-300 text-purple-600 focus:ring-purple-500">
-                        <label for="trackDepreciation" class="text-sm text-gray-700">Track depreciation for this asset</label>
-                    </div>
-                    
-                    <div class="flex justify-end space-x-4 pt-6 border-t">
-                        <button type="button" id="cancelAssetModal" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">Cancel</button>
-                        <button type="submit" class="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Add Asset</button>
-                    </div>
+{% load crispy_forms_tags %}
+{% csrf_token %}
+{% crispy form %}
+
+<div class="flex justify-end space-x-4 pt-6 border-t">
+    <button type="button" id="cancelAssetModal" onclick="closeModal('addAssetModal')" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">Cancel</button>
+    <button type="submit" class="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Add Asset</button>
+</div>
+
+<!-- <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Asset Name *</label>
+            <input type="text" name="assetName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" placeholder="e.g., MacBook Pro 16">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Asset ID</label>
+            <input type="text" name="assetId" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" placeholder="Auto-generated if empty">
+        </div>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Category *</label>
+            <select name="category" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+                <option value="">Select Category</option>
+                <option value="Laptop">Laptop</option>
+                <option value="Monitor">Monitor</option>
+                <option value="Mobile">Mobile Device</option>
+                <option value="Printer">Printer</option>
+                <option value="Tablet">Tablet</option>
+                <option value="Accessory">Accessory</option>
+                <option value="Furniture">Furniture</option>
+                <option value="Network">Network Equipment</option>
+            </select>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Brand/Manufacturer</label>
+            <input type="text" name="brand" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" placeholder="e.g., Apple, Dell, HP">
+        </div>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Assign to Employee</label>
+            <select name="assignee" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+                <option value="">Unassigned</option>
+                <option value="Sarah Johnson">Sarah Johnson (IT)</option>
+                <option value="Mike Chen">Mike Chen (Marketing)</option>
+                <option value="Emily Davis">Emily Davis (Finance)</option>
+                <option value="James Wilson">James Wilson (Operations)</option>
+                <option value="Lisa Brown">Lisa Brown (HR)</option>
+            </select>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Serial Number</label>
+            <input type="text" name="serialNumber" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" placeholder="Serial number">
+        </div>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Purchase Price *</label>
+            <input type="number" name="purchasePrice" required min="0" step="0.01" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" placeholder="0.00">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Purchase Date</label>
+            <input type="date" name="purchaseDate" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+        </div>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Location</label>
+            <input type="text" name="location" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" placeholder="e.g., IT Department, Floor 2">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+            <select name="status" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+                <option value="">Select Status</option>
+                <option value="Available">Available</option>
+                <option value="In Use">In Use</option>
+                <option value="Maintenance">Under Maintenance</option>
+                <option value="Retired">Retired</option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Warranty Expiry</label>
+            <input type="date" name="warrantyExpiry" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Supplier</label>
+            <input type="text" name="supplier" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" placeholder="Supplier name">
+        </div>
+    </div>
+    
+    <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Description/Notes</label>
+        <textarea name="description" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" placeholder="Additional details about the asset..."></textarea>
+    </div>
+    
+    <div class="flex items-center space-x-3">
+        <input type="checkbox" name="trackDepreciation" id="trackDepreciation" class="rounded border-gray-300 text-purple-600 focus:ring-purple-500">
+        <label for="trackDepreciation" class="text-sm text-gray-700">Track depreciation for this asset</label>
+    </div> -->
