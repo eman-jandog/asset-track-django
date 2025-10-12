@@ -48,6 +48,14 @@ def orders(request):
 def assets(request):
     return render(request, 'dashboard/sections/assets.html')
 
+def asset_form(request):
+    
+    if request.method == 'POST':
+        form = forms.AssetForm(request.POST)
+        if form.is_valid():
+            form.save()
+            
+
 @login_required
 def _staff(request):
     users = User.objects.all()

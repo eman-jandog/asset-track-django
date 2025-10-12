@@ -58,11 +58,11 @@
             </div>
         </div>
 
-        <!-- Overlay for mobile sidebar -->
+        <!-- Overlay for mobile sidebar -->%}
         <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden hidden"></div>
 
         <!-- All Modals -->
-        {% include 'partials/modals.html' %}    
+        {% block modals %}{% endblock %}    
     </body>
     <script src="{% static 'js/action.js' %}"></script>
 </html>
