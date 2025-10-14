@@ -322,9 +322,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('closeOrderModal').addEventListener('click', () => closeModal('createOrderModal'));
     document.getElementById('cancelOrderModal').addEventListener('click', () => closeModal('createOrderModal'));
 
-    document.getElementById('closeAssetModal').addEventListener('click', () => closeModal('addAssetModal'));
-    document.getElementById('cancelAssetModal').addEventListener('click', () => closeModal('addAssetModal'));
-
     // Form submissions
     document.getElementById('addStaffForm').addEventListener('submit', handleStaffSubmission);
     document.getElementById('createOrderForm').addEventListener('submit', handleOrderSubmission);
