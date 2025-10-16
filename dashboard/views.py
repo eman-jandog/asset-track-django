@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.views.generic import TemplateView
+from rest_framework.views import APIView
 from .models import Asset, Order
 from . import forms
 
@@ -48,7 +49,13 @@ def orders(request):
 def assets(request):
     return render(request, 'dashboard/sections/assets.html')
 
-def assets_form(request):
+class AssetForm(APIView):
+
+    def get(self, request):
+        pass
+
+    
+def assets_create(request):
     if request.method == 'POST':
         form = forms.AssetForm(request.POST)
         if form.is_valid():
@@ -58,7 +65,7 @@ def assets_form(request):
         form = forms.AssetForm()
     return render(request, 'dashboard/forms/asset_form.html', {'form': form})
 
-def assets_form_update(request, id):
+def assets_update(request, id):
     asset = Asset.objects.get(id=id)
     if request.method == 'POST':
         form = forms.AssetForm(request.POST, instance=asset)
@@ -67,7 +74,14 @@ def assets_form_update(request, id):
             return JsonResponse({'message': 'Success!'}, status=200)
     else:
         form = forms.AssetForm(instance=asset)
-    return render(request, 'dashboard/forms/asset_form.html', {'form': form})
+    return render(request, 'dashboard/forms/asset_form_update.html', {'form': form})
+
+def assets_delete(request, id):
+    if request.method == 'POST':
+        asset = Asset.objects.get_or_404(id=id)
+        asset.delete()
+    return redirect('dashboard-assets')
+
 
 @login_required
 def _staff(request):
