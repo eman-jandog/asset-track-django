@@ -8,7 +8,7 @@ from .models import Asset, Order
 class AssetForm(ModelForm):
     class Meta:
         model = Asset
-        fields = ['name','track_id','category', 'brand', 'sn', 'price', 'date_purchase', 'date_warranty', 'status', 'location', 'supplier', 'description']
+        fields = ['name','track_id','category', 'employee', 'brand', 'sn', 'price', 'date_purchase', 'date_warranty', 'status', 'location', 'supplier', 'description']
         labels = {
             'name': 'Asset Name',
             'track_id': 'Asset ID',

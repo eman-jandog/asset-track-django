@@ -51,19 +51,15 @@ def assets(request):
 
 class AssetForm(APIView):
 
-    def get(self, request):
-        pass
-
+    def get(self, request, format=None):
+        form = forms.AssetForm()
+        return render(request, 'dashboard/forms/asset_form.html', {'form': form})
     
-def assets_create(request):
-    if request.method == 'POST':
+    def post(self, request, format=None):
         form = forms.AssetForm(request.POST)
         if form.is_valid():
             form.save()
             return JsonResponse({'message': 'Success!'}, status=201)
-    else:
-        form = forms.AssetForm()
-    return render(request, 'dashboard/forms/asset_form.html', {'form': form})
 
 def assets_update(request, id):
     asset = Asset.objects.get(id=id)

@@ -7,7 +7,7 @@ urlpatterns = [
     path('staff/', views.staff, name='dashboard-staff'),
     path('orders/', views.orders, name='dashboard-orders'),
     path('assets/', views.assets, name='dashboard-assets'),
-    path('assets/create/', views.assets_create, name='dashboard-assets-create'),
+    path('assets/create', views.AssetForm.as_view(), name='dashboard-assets-create'),
     path('assets/update/<int:id>/', views.assets_update, name='dashboard-assets-update'),
     path('assets/delete/<int:id>/', views.assets_delete, name='dashboard-assets-delete')
 
