@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.views.generic import TemplateView
 from rest_framework.views import APIView
+from rest_framework import status
 from .models import Asset, Order
 from . import forms
 
@@ -61,22 +62,24 @@ class AssetForm(APIView):
             form.save()
             return JsonResponse({'message': 'Success!'}, status=201)
 
-def assets_update(request, id):
-    asset = Asset.objects.get(id=id)
-    if request.method == 'POST':
+class AssetFormAction(APIView):
+
+    def get(self, request, id, format=None):
+        asset = Asset.objects.get_or_404(id=id)
+        form = forms.AssetForm(request.POST, instance=asset)
+        return render(request, 'dashboard/forms/asset_form.html', {'form': form})
+
+    def put(self, request, id, format=None):
+        asset = Asset.objects.get_or_404(id=id)
         form = forms.AssetForm(request.POST, instance=asset)
         if form.is_valid():
             form.save()
-            return JsonResponse({'message': 'Success!'}, status=200)
-    else:
-        form = forms.AssetForm(instance=asset)
-    return render(request, 'dashboard/forms/asset_form_update.html', {'form': form})
+            return JsonResponse({'message': 'Success'}, status=status.HTTP_200_OK)
 
-def assets_delete(request, id):
-    if request.method == 'POST':
+    def delete(selt, request, id, format=None):
         asset = Asset.objects.get_or_404(id=id)
         asset.delete()
-    return redirect('dashboard-assets')
+        return redirect('dashboard-assets')
 
 
 @login_required
