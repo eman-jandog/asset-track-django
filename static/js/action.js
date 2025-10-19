@@ -325,7 +325,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Form submissions
     document.getElementById('addStaffForm').addEventListener('submit', handleStaffSubmission);
     document.getElementById('createOrderForm').addEventListener('submit', handleOrderSubmission);
-    document.getElementById('addAssetForm').addEventListener('submit', handleAssetSubmission);
+    // document.getElementById('addAssetForm').addEventListener('submit', handleAssetSubmission);
 
     // Order item management
     document.getElementById('addOrderItem').addEventListener('click', addOrderItem);

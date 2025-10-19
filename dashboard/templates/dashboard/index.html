@@ -238,7 +238,7 @@ AssetTrack Overview
                 </div>
             </div>
 
-            <form id="addAssetForm" class="p-6 space-y-6" hx-get="{% url 'dashboard-assets-form' %}" hx-trigger="load"></form>
+            <div hx-get="{% url 'dashboard-assets-create' %}" hx-target="this" hx-trigger="load" hx-swap="outerHTML"></div> 
         </div>
     </div>
 {% endblock %}

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "crispy_tailwind",
     "debug_toolbar",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
