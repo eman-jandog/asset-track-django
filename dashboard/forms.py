@@ -8,11 +8,11 @@ from .models import Asset, Order
 class AssetForm(ModelForm):
     class Meta:
         model = Asset
-        fields = ['name','track_id','category', 'employee', 'brand', 'sn', 'price', 'date_purchase', 'date_warranty', 'status', 'location', 'supplier', 'description']
+        fields = ['name','track_id','category', 'brand', 'sn', 'price', 'date_purchase', 'date_warranty', 'status', 'location', 'supplier', 'description']
         labels = {
             'name': 'Asset Name',
             'track_id': 'Asset ID',
-            'employee': 'Assigned Employee',
+            # 'employee': 'Assigned Employee',
             'sn': 'Serial Number'
         }
         widgets = {
@@ -63,13 +63,13 @@ class AssetForm(ModelForm):
                 css_class="grid grid-cols-1 md:grid-cols-2 gap-6"
             ),
             Div(
-                Div(
-                    Field(
-                        'employee',
-                        label_class='block text-sm font-medium text-gray-700 mb-2',
-                        css_class='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all'
-                    )
-                ),
+                # Div(
+                #     Field(
+                #         'employee',
+                #         label_class='block text-sm font-medium text-gray-700 mb-2',
+                #         css_class='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all'
+                #     )
+                # ),
                 Div(
                     Field(
                         'sn',

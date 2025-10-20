@@ -48,7 +48,8 @@ def orders(request):
     return render(request, 'dashboard/sections/orders.html')
 
 def assets(request):
-    return render(request, 'dashboard/sections/assets.html')
+    assets = Asset.objects.all()
+    return render(request, 'dashboard/sections/assets.html', {'assets': assets})
 
 class AssetForm(APIView):
 
@@ -69,7 +70,7 @@ class AssetFormAction(APIView):
         form = forms.AssetForm(request.POST, instance=asset)
         return render(request, 'dashboard/forms/asset_form.html', {'form': form})
 
-    def put(self, request, id, format=None):
+    def post(self, request, id, format=None):
         asset = Asset.objects.get_or_404(id=id)
         form = forms.AssetForm(request.POST, instance=asset)
         if form.is_valid():

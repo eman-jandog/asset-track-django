@@ -35,174 +35,31 @@
                 </tr>
             </thead>
             <tbody id="assetsTableBody" class="bg-white divide-y divide-gray-200">
-<tr class="hover:bg-gray-50">
-<td class="px-6 py-4 whitespace-nowrap">
-    <div class="flex items-center">
-        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
-            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
-            </svg>
-        </div>
-        <div>
-            <div class="text-sm font-medium text-gray-900">MacBook Pro 16"</div>
-            <div class="text-sm text-gray-500">ID: AST-001</div>
-        </div>
-    </div>
-</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Laptop</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">IT Department</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Sarah Johnson</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">$2,500</td>
-<td class="px-6 py-4 whitespace-nowrap">
-    <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">In Use</span>
-</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-    <button class="text-blue-600 hover:text-blue-900 mr-3" onclick="editAsset('AST-001')">Edit</button>
-    <button class="text-green-600 hover:text-green-900 mr-3" onclick="assignAsset('AST-001')">Assign</button>
-    <button class="text-red-600 hover:text-red-900" onclick="deleteAsset('AST-001')">Delete</button>
-</td>
-</tr>
-
-<tr class="hover:bg-gray-50">
-<td class="px-6 py-4 whitespace-nowrap">
-    <div class="flex items-center">
-        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
-            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
-            </svg>
-        </div>
-        <div>
-            <div class="text-sm font-medium text-gray-900">Dell Monitor 27"</div>
-            <div class="text-sm text-gray-500">ID: AST-002</div>
-        </div>
-    </div>
-</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Monitor</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Marketing</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Unassigned</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">$350</td>
-<td class="px-6 py-4 whitespace-nowrap">
-    <span class="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">Available</span>
-</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-    <button class="text-blue-600 hover:text-blue-900 mr-3" onclick="editAsset('AST-002')">Edit</button>
-    <button class="text-green-600 hover:text-green-900 mr-3" onclick="assignAsset('AST-002')">Assign</button>
-    <button class="text-red-600 hover:text-red-900" onclick="deleteAsset('AST-002')">Delete</button>
-</td>
-</tr>
-
-<tr class="hover:bg-gray-50">
-<td class="px-6 py-4 whitespace-nowrap">
-    <div class="flex items-center">
-        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
-            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
-            </svg>
-        </div>
-        <div>
-            <div class="text-sm font-medium text-gray-900">iPhone 15 Pro</div>
-            <div class="text-sm text-gray-500">ID: AST-003</div>
-        </div>
-    </div>
-</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Mobile</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Executive Office</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Mike Chen</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">$1,200</td>
-<td class="px-6 py-4 whitespace-nowrap">
-    <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">In Use</span>
-</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-    <button class="text-blue-600 hover:text-blue-900 mr-3" onclick="editAsset('AST-003')">Edit</button>
-    <button class="text-green-600 hover:text-green-900 mr-3" onclick="assignAsset('AST-003')">Assign</button>
-    <button class="text-red-600 hover:text-red-900" onclick="deleteAsset('AST-003')">Delete</button>
-</td>
-</tr>
-
-<tr class="hover:bg-gray-50">
-<td class="px-6 py-4 whitespace-nowrap">
-    <div class="flex items-center">
-        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
-            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
-            </svg>
-        </div>
-        <div>
-            <div class="text-sm font-medium text-gray-900">HP Printer LaserJet</div>
-            <div class="text-sm text-gray-500">ID: AST-004</div>
-        </div>
-    </div>
-</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Printer</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Finance</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Unassigned</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">$800</td>
-<td class="px-6 py-4 whitespace-nowrap">
-    <span class="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">Maintenance</span>
-</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-    <button class="text-blue-600 hover:text-blue-900 mr-3" onclick="editAsset('AST-004')">Edit</button>
-    <button class="text-green-600 hover:text-green-900 mr-3" onclick="assignAsset('AST-004')">Assign</button>
-    <button class="text-red-600 hover:text-red-900" onclick="deleteAsset('AST-004')">Delete</button>
-</td>
-</tr>
-
-<tr class="hover:bg-gray-50">
-<td class="px-6 py-4 whitespace-nowrap">
-    <div class="flex items-center">
-        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
-            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
-            </svg>
-        </div>
-        <div>
-            <div class="text-sm font-medium text-gray-900">Surface Pro 9</div>
-            <div class="text-sm text-gray-500">ID: AST-005</div>
-        </div>
-    </div>
-</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Tablet</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Sales</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Emily Davis</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">$1,100</td>
-<td class="px-6 py-4 whitespace-nowrap">
-    <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">In Use</span>
-</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-    <button class="text-blue-600 hover:text-blue-900 mr-3" onclick="editAsset('AST-005')">Edit</button>
-    <button class="text-green-600 hover:text-green-900 mr-3" onclick="assignAsset('AST-005')">Assign</button>
-    <button class="text-red-600 hover:text-red-900" onclick="deleteAsset('AST-005')">Delete</button>
-</td>
-</tr>
-
-<tr class="hover:bg-gray-50">
-<td class="px-6 py-4 whitespace-nowrap">
-    <div class="flex items-center">
-        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
-            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
-            </svg>
-        </div>
-        <div>
-            <div class="text-sm font-medium text-gray-900">Logitech Webcam</div>
-            <div class="text-sm text-gray-500">ID: AST-006</div>
-        </div>
-    </div>
-</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Accessory</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">HR</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Unassigned</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">$150</td>
-<td class="px-6 py-4 whitespace-nowrap">
-    <span class="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">Available</span>
-</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-    <button class="text-blue-600 hover:text-blue-900 mr-3" onclick="editAsset('AST-006')">Edit</button>
-    <button class="text-green-600 hover:text-green-900 mr-3" onclick="assignAsset('AST-006')">Assign</button>
-    <button class="text-red-600 hover:text-red-900" onclick="deleteAsset('AST-006')">Delete</button>
-</td>
-</tr>
-</tbody>
+                {% for asset in assets %}
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div>
+                                <div class="text-sm font-medium text-gray-900">{{ asset.name }}</div>
+                                <div class="text-sm text-gray-500">ID: {{ asset.track_id }}</div>
+                            </div>
+                        </div>   
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ asset.category }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">IT Department</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ asset.employee }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ asset.price }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">{{ asset.status }}</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <button class="text-blue-600 hover:text-blue-900 mr-3" onclick="editAsset('AST-001')">Edit</button>
+                        <button class="text-green-600 hover:text-green-900 mr-3" onclick="assignAsset('AST-001')">Assign</button>
+                        <button class="text-red-600 hover:text-red-900" onclick="deleteAsset('AST-001')">Delete</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
     </div>
 </div>
