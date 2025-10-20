@@ -75,7 +75,6 @@ function toggleUserMenu() {
 
 // Modal functions
 function openModal(modalId) {
-    console.log('clicked')
     document.getElementById(modalId).classList.remove('hidden');
     document.body.style.overflow = 'hidden';
 }

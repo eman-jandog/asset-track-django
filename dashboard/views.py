@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import JsonResponse
+from django.http import Http404, JsonResponse
+from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
 from rest_framework.views import APIView
 from rest_framework import status
@@ -66,19 +67,19 @@ class AssetForm(APIView):
 class AssetFormAction(APIView):
 
     def get(self, request, id, format=None):
-        asset = Asset.objects.get_or_404(id=id)
-        form = forms.AssetForm(request.POST, instance=asset)
+        asset = get_object_or_404(Asset, id=id)
+        form = forms.AssetForm(instance=asset)
         return render(request, 'dashboard/forms/asset_form.html', {'form': form})
 
     def post(self, request, id, format=None):
-        asset = Asset.objects.get_or_404(id=id)
+        asset = get_object_or_404(Asset, id=id)
         form = forms.AssetForm(request.POST, instance=asset)
         if form.is_valid():
             form.save()
             return JsonResponse({'message': 'Success'}, status=status.HTTP_200_OK)
 
     def delete(selt, request, id, format=None):
-        asset = Asset.objects.get_or_404(id=id)
+        asset = get_object_or_404(Asset, id=id)
         asset.delete()
         return redirect('dashboard-assets')
 
