@@ -83,7 +83,6 @@ class AssetFormAction(APIView):
         asset.delete()
         return redirect('dashboard-assets')
 
-
 @login_required
 def _staff(request):
     users = User.objects.all()

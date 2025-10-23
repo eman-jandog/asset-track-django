@@ -75,7 +75,11 @@ function toggleUserMenu() {
 
 // Modal functions
 function openModal(modalId) {
-    document.getElementById(modalId).classList.remove('hidden');
+    htmx.ajax('GET', `${modalId}/form/`, {
+        'target': '#formModal',
+    })
+
+    document.getElementById('formModal').classList.remove('hidden');
     document.body.style.overflow = 'hidden';
 }
 
@@ -315,19 +319,19 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('sidebarToggle').addEventListener('click', toggleSidebarMode);
 
     // Modal close buttons
-    document.getElementById('closeStaffModal').addEventListener('click', () => closeModal('addStaffModal'));
-    document.getElementById('cancelStaffModal').addEventListener('click', () => closeModal('addStaffModal'));
+    // document.getElementById('closeStaffModal').addEventListener('click', () => closeModal('addStaffModal'));
+    // document.getElementById('cancelStaffModal').addEventListener('click', () => closeModal('addStaffModal'));
 
-    document.getElementById('closeOrderModal').addEventListener('click', () => closeModal('createOrderModal'));
-    document.getElementById('cancelOrderModal').addEventListener('click', () => closeModal('createOrderModal'));
+    // document.getElementById('closeOrderModal').addEventListener('click', () => closeModal('createOrderModal'));
+    // document.getElementById('cancelOrderModal').addEventListener('click', () => closeModal('createOrderModal'));
 
     // Form submissions
-    document.getElementById('addStaffForm').addEventListener('submit', handleStaffSubmission);
-    document.getElementById('createOrderForm').addEventListener('submit', handleOrderSubmission);
+    // document.getElementById('addStaffForm').addEventListener('submit', handleStaffSubmission);
+    // document.getElementById('createOrderForm').addEventListener('submit', handleOrderSubmission);
     // document.getElementById('addAssetForm').addEventListener('submit', handleAssetSubmission);
 
     // Order item management
-    document.getElementById('addOrderItem').addEventListener('click', addOrderItem);
+    // document.getElementById('addOrderItem').addEventListener('click', addOrderItem);
 
     // Initial setup for order items
     document.querySelectorAll('.remove-item').forEach(btn => {
