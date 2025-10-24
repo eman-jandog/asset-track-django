@@ -74,8 +74,15 @@ function toggleUserMenu() {
 }
 
 // Modal functions
-function openModal(modalId) {
-    htmx.ajax('GET', `${modalId}/form/`, {
+function openModal(modalType, id=null) {
+    let url;
+    if (id) {
+        url = `${modalType}/form/${id}/`;
+    } else {
+        url = `${modalType}/form/`;
+    }
+
+    htmx.ajax('GET', url, {
         'target': '#formModal',
     })
 
@@ -83,16 +90,16 @@ function openModal(modalId) {
     document.body.style.overflow = 'hidden';
 }
 
-function closeModal(modalId) {
-    document.getElementById(modalId).classList.add('hidden');
+function closeModal() {
+    document.getElementById("formModal").classList.add('hidden');
     document.body.style.overflow = 'auto';
     // Reset form
-    const form = document.querySelector(`#${modalId} form`);
+    const form = document.querySelector(`#forModal form`);
     if (form) form.reset();
     // Reset order total if it's the order modal
-    if (modalId === 'createOrderModal') {
-        updateOrderTotal();
-    }
+    // if (modalType === 'createOrderModal') {
+    //     updateOrderTotal();
+    // }
 }
 
 // Order item management

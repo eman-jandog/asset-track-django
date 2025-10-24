@@ -69,7 +69,7 @@ class AssetFormAction(APIView):
     def get(self, request, id, format=None):
         asset = get_object_or_404(Asset, id=id)
         form = forms.AssetForm(instance=asset)
-        return render(request, 'dashboard/forms/asset_form.html', {'form': form})
+        return render(request, 'dashboard/forms/asset_form_update.html', {'form': form, 'id': id})
 
     def post(self, request, id, format=None):
         asset = get_object_or_404(Asset, id=id)
