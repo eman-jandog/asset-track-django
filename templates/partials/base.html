@@ -53,16 +53,22 @@
             {% include 'partials/sidebar.html' %}
             <div id="mainContent" class="min-h-screen flex flex-col transition-all duration-300 lg:ml-16">
                 {% include 'partials/header.html' %}
-                {% block main %}{% endblock %}
+                <main id="mainSection" class="p-6 flex-1">
+                    <div id="pageSection" class="section-content fade-in">
+                        {% block page %} {% endblock %}
+                    </div>
+                </main>   
                 {% include 'partials/footer.html' %}
             </div>
         </div>
 
-        <!-- Overlay for mobile sidebar -->%}
+        <!-- Overlay for mobile sidebar -->
         <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden hidden"></div>
 
         <!-- All Modals -->
-        {% block modals %}{% endblock %} 
+        <div id="formModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+    </div>
     </body>
-    <script src="{% static 'js/action.js' %}"></script>
+    <script type="module" src="{% static 'js/global.js' %}"></script>
+    {% block scripts %} {% endblock %}
 </html>

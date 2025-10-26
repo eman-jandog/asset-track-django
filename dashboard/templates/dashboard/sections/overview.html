@@ -1,4 +1,6 @@
-{% extends 'dashboard/index.html' %}
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block title %} Overview {% endblock %}
 {% block page %}
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -128,4 +130,7 @@
             </div>
         </div>
     </div>
+{% endblock %}
+{% block scripts %} 
+    <script type="module" src="{% static 'js/overview.js' %}"></script>
 {% endblock %}

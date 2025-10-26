@@ -36,9 +36,6 @@ def home(request):
         'products': products
     }
     '''
-    return render(request, 'dashboard/index.html')
-
-def overview(request):
     return render(request, 'dashboard/sections/overview.html')
 
 def staff(request):
