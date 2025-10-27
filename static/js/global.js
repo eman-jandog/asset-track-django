@@ -1,3 +1,5 @@
+let toggleMode;
+
 // Exported Functions
 export function showSection(sectionName) {
     document.querySelectorAll('.nav-item').forEach(item => {
@@ -44,6 +46,8 @@ function toggleSidebarMode() {
         mainContent.classList.remove('lg:ml-64');
         mainContent.classList.add('lg:ml-16');  
     }
+
+    return !isCompact
 }
 
 function toggleUserMenu() {
@@ -112,8 +116,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Sidebar buttons navigation
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const section = item.dataset.section;
+            let url = window.location.href
+            let regEx = /\/[a-z]*\/$/i;
+            url = url.replace(regEx, `/${section}/`)
+            window.location.href = url       
+        })
+    })
+
     //  Initial Run
-    toggleSidebarMode();
 
     // Modal close buttons
     // document.getElementById('closeStaffModal').addEventListener('click', () => closeModal('addStaffModal'));
@@ -141,13 +155,5 @@ document.addEventListener('DOMContentLoaded', () => {
     // document.querySelectorAll('input[name="itemQuantity[]"], input[name="itemPrice[]"]').forEach(input => {
     //     input.addEventListener('input', updateOrderTotal);
     // });
-
-    // Sidebar buttons navigation
-    // document.querySelectorAll('.nav-item').forEach(item => {
-    //     item.addEventListener('click', () => {
-    //         const section = item.dataset.section;
-    //         showSection(section);
-    //     })
-    // })
 })
 
