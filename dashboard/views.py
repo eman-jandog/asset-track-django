@@ -9,6 +9,7 @@ from rest_framework import status
 from .models import Asset, Order
 from . import forms
 
+
 @login_required
 def home(request):
     # user = request.user
@@ -36,6 +37,9 @@ def home(request):
         'products': products
     }
     '''
+    return render(request, 'dashboard/index.html')
+
+def overview(request):
     return render(request, 'dashboard/sections/overview.html')
 
 def staff(request):
@@ -48,7 +52,7 @@ def assets(request):
     assets = Asset.objects.all()
     return render(request, 'dashboard/sections/assets.html', {'assets': assets})
 
-class AssetForm(APIView):   
+class AssetForm(APIView):
 
     def get(self, request, format=None):
         form = forms.AssetForm()
