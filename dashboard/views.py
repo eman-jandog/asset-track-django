@@ -62,7 +62,7 @@ class AssetForm(APIView):
         form = forms.AssetForm(request.POST)
         if form.is_valid():
             form.save()
-            return JsonResponse({'message': 'Success!'}, status=201)
+            # return JsonResponse({'message': 'Success!'}, status=201)
 
 class AssetFormAction(APIView):
 
@@ -76,7 +76,7 @@ class AssetFormAction(APIView):
         form = forms.AssetForm(request.POST, instance=asset)
         if form.is_valid():
             form.save()
-            return JsonResponse({'message': 'Success'}, status=status.HTTP_200_OK)
+            # return JsonResponse({'message': 'Success'}, status=status.HTTP_200_OK)
 
     def delete(selt, request, id, format=None):
         asset = get_object_or_404(Asset, id=id)

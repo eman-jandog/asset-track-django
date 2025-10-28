@@ -52,7 +52,8 @@ function showSection(sectionName) {
 
     const section = document.querySelector(`#${sectionName}Section`)
     section.classList.remove('hidden')
-    
+
+    localStorage.setItem('last_section', sectionName) 
 }
 
 function toggleUserMenu() {
@@ -374,7 +375,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     //  Initial Run
-    toggleSidebarMode();
+    let sectionName = localStorage.getItem('last_section');
+    sectionName ? showSection(sectionName) : showSection('overview')
     initializeDashboard();
 })
 
