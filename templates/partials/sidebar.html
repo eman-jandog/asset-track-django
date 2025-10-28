@@ -1,72 +1,72 @@
 <!-- Sidebar -->{% load user_filters %}
-            <div id="sidebar" class="fixed inset-y-0 left-0 z-40 bg-white shadow-xl transform -translate-x-full lg:translate-x-0 sidebar-transition truncate w-16" >
-            <div id="fullSideBar" class="fixed inset-y-0 left-0 z-50 w-full bg-white shadow-xl flex flex-col">
-                <!-- Logo -->
-                <div class="h-16 flex items-center justify-between p-4 border-b border-bd-primary">
-                    <div class="flex items-center space-x-5">
-                        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                            </svg>
-                        </div>
-                        <div>
-                            <h1 class="text-lg font-bold text-gray-800">AssetTrack</h1>
+            <div id="sidebar" class="fixed inset-y-0 left-0 z-40 bg-white shadow-xl transform -translate-x-full lg:translate-x-0 sidebar-transition truncate w-64" >
+                <div id="fullSideBar" class="fixed inset-y-0 left-0 z-50 w-full bg-white shadow-xl flex flex-col">
+                    <!-- Logo -->
+                    <div class="h-16 flex items-center justify-between p-4 border-b border-bd-primary">
+                        <div class="flex items-center space-x-5">
+                            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h1 class="text-lg font-bold text-gray-800">AssetTrack</h1>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Navigation Icons -->
-                <nav class="flex-1 py-4">
-                    <div class="flex flex-col space-y-2 px-2">
-                        <button class="nav-item w-full text-start p-3 rounded-lg space-x-6 group relative hover:bg-gray-50 hover:text-gray-800 transition-colors text-gray-600" data-section="overview" title="Overview">
-                            <svg class="inline w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    <!-- Navigation Icons -->
+                    <nav class="flex-1 py-4">
+                        <div class="flex flex-col space-y-2 px-2">
+                            <button class="nav-item w-full text-start p-3 rounded-lg space-x-6 group relative hover:bg-gray-50 hover:text-gray-800 transition-colors text-gray-600" data-section="overview" title="Overview">
+                                <svg class="inline w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
 
-                            </svg><span class="font-medium">Overview</span>
+                                </svg><span class="font-medium">Overview</span>
+                                
+                            </button>
+
+                            <button class="nav-item w-full text-start p-3 rounded-lg space-x-6 group relative hover:bg-gray-50 hover:text-gray-800 transition-colors text-gray-600" data-section="staff" title="Staff">
+                                <svg class="inline w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                                </svg><span class="font-medium">Staff</span>
+                                
+                            </button>
                             
-                        </button>
+                            <button class="nav-item w-full text-start p-3 rounded-lg space-x-6 group relative hover:bg-gray-50 hover:text-gray-800 transition-colors text-gray-600" data-section="orders" title="Orders">
+                                <svg class="inline w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                                </svg><span class="font-medium">Orders</span>
+                            </button>
 
-                        <button class="nav-item w-full text-start p-3 rounded-lg space-x-6 group relative hover:bg-gray-50 hover:text-gray-800 transition-colors text-gray-600" data-section="staff" title="Staff">
-                            <svg class="inline w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
-                            </svg><span class="font-medium">Staff</span>
-                            
-                        </button><button class="nav-item w-full text-start p-3 rounded-lg space-x-6 group relative hover:bg-gray-50 hover:text-gray-800 transition-colors text-gray-600" data-section="orders" title="Orders">
-                            <svg class="inline w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                            </svg><span class="font-medium">Orders</span>
-                            
-                        </button>
+                            <button class="nav-item w-full text-start p-3 rounded-lg space-x-6 group relative hover:bg-gray-50 hover:text-gray-800 transition-colors text-gray-600" data-section="assets" title="Assets">
+                                <svg class="inline w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                                </svg><span class="font-medium">Assets</span>
+                            </button>
+                        </div>
+                    </nav>
 
-                        <button class="nav-item w-full text-start p-3 rounded-lg space-x-6 group relative hover:bg-gray-50 hover:text-gray-800 transition-colors text-gray-600" data-section="assets" title="Assets">
-                            <svg class="inline w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
-                            </svg><span class="font-medium">Assets</span>
-                            
-                        </button>
-                    </div>
-                </nav>
-
-                <!-- User Avatar -->
-                <div class="p-2">
-                    <button id="profileBtn" class="w-full p-1 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-gray-800 transition-colors flex items-center justify-between group relative space-x-5">
-                        <div class="flex justify-start items-center space-x-5">
-                            <div class="flex-none">
-                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                            <span class="text-blue-600 font-semibold text-xs">{{ user|iconize }}</span>
+                    <!-- User Avatar -->
+                    <div class="p-2">
+                        <button id="profileBtn" class="w-full p-1 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-gray-800 transition-colors flex items-center justify-between group relative space-x-5">
+                            <div class="flex justify-start items-center space-x-5">
+                                <div class="flex-none">
+                                    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                <span class="text-blue-600 font-semibold text-xs">{{ user|iconize }}</span>
+                                    </div>
+                                </div>
+                                <div class="text-start">
+                                    <p class="font-medium text-gray-800" id="userDisplayName">{{ user.username }}</p>
+                                    <p class="text-xs text-gray-500" id="userRole">{% if user.is_staff %}Administrator{%else%}User{% endif %}</p>
                                 </div>
                             </div>
-                            <div class="text-start">
-                                <p class="font-medium text-gray-800" id="userDisplayName">{{ user.username }}</p>
-                                <p class="text-xs text-gray-500" id="userRole">{% if user.is_staff %}Administrator{%else%}User{% endif %}</p>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4a5565"><path d="M480-120 300-300l58-58 122 122 122-122 58 58-180 180ZM358-598l-58-58 180-180 180 180-58 58-122-122-122 122Z"/></svg>
                             </div>
-                        </div>
-                        <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4a5565"><path d="M480-120 300-300l58-58 122 122 122-122 58 58-180 180ZM358-598l-58-58 180-180 180 180-58 58-122-122-122 122Z"/></svg>
-                        </div>
-                    </button>
+                        </button>
+                    </div>
                 </div>
-            </div>
             </div>
 
             <div id="userMenu" class="fixed lg:bottom-2 lg:left-18 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 slide-in hidden">

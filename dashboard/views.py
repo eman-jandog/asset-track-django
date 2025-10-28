@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import JsonResponse
+from django.http import Http404, JsonResponse
+from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
 from rest_framework.views import APIView
+from rest_framework import status
 from .models import Asset, Order
 from . import forms
-
 
 @login_required
 def home(request):
@@ -35,9 +36,6 @@ def home(request):
         'products': products
     }
     '''
-    return render(request, 'dashboard/index.html')
-
-def overview(request):
     return render(request, 'dashboard/sections/overview.html')
 
 def staff(request):
@@ -47,9 +45,10 @@ def orders(request):
     return render(request, 'dashboard/sections/orders.html')
 
 def assets(request):
-    return render(request, 'dashboard/sections/assets.html')
+    assets = Asset.objects.all()
+    return render(request, 'dashboard/sections/assets.html', {'assets': assets})
 
-class AssetForm(APIView):
+class AssetForm(APIView):   
 
     def get(self, request, format=None):
         form = forms.AssetForm()
@@ -61,23 +60,24 @@ class AssetForm(APIView):
             form.save()
             return JsonResponse({'message': 'Success!'}, status=201)
 
-def assets_update(request, id):
-    asset = Asset.objects.get(id=id)
-    if request.method == 'POST':
+class AssetFormAction(APIView):
+
+    def get(self, request, id, format=None):
+        asset = get_object_or_404(Asset, id=id)
+        form = forms.AssetForm(instance=asset)
+        return render(request, 'dashboard/forms/asset_form_update.html', {'form': form, 'id': id})
+
+    def post(self, request, id, format=None):
+        asset = get_object_or_404(Asset, id=id)
         form = forms.AssetForm(request.POST, instance=asset)
         if form.is_valid():
             form.save()
-            return JsonResponse({'message': 'Success!'}, status=200)
-    else:
-        form = forms.AssetForm(instance=asset)
-    return render(request, 'dashboard/forms/asset_form_update.html', {'form': form})
+            return JsonResponse({'message': 'Success'}, status=status.HTTP_200_OK)
 
-def assets_delete(request, id):
-    if request.method == 'POST':
-        asset = Asset.objects.get_or_404(id=id)
+    def delete(selt, request, id, format=None):
+        asset = get_object_or_404(Asset, id=id)
         asset.delete()
-    return redirect('dashboard-assets')
-
+        return redirect('dashboard-assets')
 
 @login_required
 def _staff(request):
