@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import Http404, JsonResponse
+from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
 from rest_framework.views import APIView
@@ -62,7 +62,11 @@ class AssetForm(APIView):
         form = forms.AssetForm(request.POST)
         if form.is_valid():
             form.save()
-            return JsonResponse({'message': 'Success!'}, status=201)
+            
+            if request.headers.get('HX-Request'):
+                response = HttpResponse()
+                response['HX-Redirect'] = redirect('dashboard-home').url
+                return response
 
 class AssetFormAction(APIView):
 
@@ -76,7 +80,7 @@ class AssetFormAction(APIView):
         form = forms.AssetForm(request.POST, instance=asset)
         if form.is_valid():
             form.save()
-            return JsonResponse({'message': 'Success'}, status=status.HTTP_200_OK)
+            return redirect('dashboard-home')
 
     def delete(selt, request, id, format=None):
         asset = get_object_or_404(Asset, id=id)
