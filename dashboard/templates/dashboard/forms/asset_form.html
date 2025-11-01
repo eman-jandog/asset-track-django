@@ -11,12 +11,12 @@
                     </div>
                 </div>
 
-                <form method="post" action="{% url 'dashboard-assets-form' %}" class="p-6 space-y-6" hx-target="this" hx-swap="outerHTML">
+                <form class="p-6 space-y-6" hx-target="this" hx-swap="outerHTML">
                     {% csrf_token %}
                     {% crispy form %}
                     <div class="flex justify-end space-x-4 pt-6 border-t">
                         <button type="button" id="cancelAssetModal" onclick="closeModal()" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">Cancel</button>
-                        <button type="submit" class="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Add Asset</button>
+                        <button type="submit" id="submitBtn" class="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Add Asset</button>
                     </div>
                 </form>
             </div>

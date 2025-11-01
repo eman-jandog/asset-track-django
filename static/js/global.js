@@ -52,8 +52,7 @@ function showSection(sectionName) {
 
     const section = document.querySelector(`#${sectionName}Section`)
     section.classList.remove('hidden')
-
-    localStorage.setItem('lastSection', sectionName)
+    
 }
 
 function toggleUserMenu() {
@@ -75,15 +74,8 @@ function toggleUserMenu() {
 }
 
 // Modal functions
-function openModal(modalType, id=null) {
-    let url;
-    if (id) {
-        url = `${modalType}/form/${id}/`;
-    } else {
-        url = `${modalType}/form/`;
-    }
-
-    htmx.ajax('GET', url, {
+function openModal(modalId) {
+    htmx.ajax('GET', `${modalId}/form/`, {
         'target': '#formModal',
     })
 
@@ -98,7 +90,7 @@ function closeModal() {
     const form = document.querySelector(`#forModal form`);
     if (form) form.reset();
     // Reset order total if it's the order modal
-    // if (modalType === 'createOrderModal') {
+    // if (modalId === 'createOrderModal') {
     //     updateOrderTotal();
     // }
 }
@@ -172,6 +164,15 @@ function removeOrderItem(btn) {
     } else {
         alert('At least one item is required for an order.');
     }
+}
+
+function updateAssetItem(id) {
+    htmx.ajax('GET', `assets/form/${id}`, {
+        'target': '#formModal'
+    })
+
+    document.getElementById('formModal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
 }
 
 // Form submission handlers
@@ -374,9 +375,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    //  Initial Run
-    const sectionName = localStorage.getItem('lastSection');
-    sectionName ? showSection(sectionName) : showSection('overview')
+    // Listen to clicks in form Modal
+    document.getElementById('formModal').addEventListener('click', (e) => {
+        e.preventDefault()
+        const saveBtn = e.target.closest('#submitBtn')
+        
+        if (saveBtn) {
+            const form = e.target.closest('form');
+        }
+    })
+
+    //  Initial Run config
+    toggleSidebarMode();
     initializeDashboard();
 })
 
