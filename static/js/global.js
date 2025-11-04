@@ -52,7 +52,8 @@ function showSection(sectionName) {
 
     const section = document.querySelector(`#${sectionName}Section`)
     section.classList.remove('hidden')
-    
+
+    localStorage.setItem('lastSection', sectionName)
 }
 
 function toggleUserMenu() {
@@ -167,12 +168,30 @@ function removeOrderItem(btn) {
 }
 
 function updateAssetItem(id) {
-    htmx.ajax('GET', `assets/form/${id}`, {
+    htmx.ajax('GET', `assets/form/${id}/`, {
         'target': '#formModal'
     })
 
     document.getElementById('formModal').classList.remove('hidden');
     document.body.style.overflow = 'hidden';
+}
+
+function deleteAssetItem(id) {
+
+    const csrfToken = getCookie('csrftoken');
+    htmx.ajax('DELETE', `assets/form/${id}/` , {
+        headers: {
+            'X-CSRFToken': csrfToken
+        },
+        handler: (elt, info) => {
+            if (info.xhr.status == 204) {
+                htmx.ajax('GET', 'assets/', '#assetsSection')
+            }
+            else {
+                console.error("Failed to delete")
+            }
+        }
+    })
 }
 
 // Form submission handlers
@@ -321,6 +340,23 @@ function initializeDashboard() {
     setTimeout(initializeCharts, 100);
 }
 
+
+// Document Functions
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith(name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length+1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Sidebar actions
     document.getElementById('logoutBtn').addEventListener('click', handleLogout);
@@ -378,15 +414,36 @@ document.addEventListener('DOMContentLoaded', () => {
     // Listen to clicks in form Modal
     document.getElementById('formModal').addEventListener('click', (e) => {
         e.preventDefault()
-        const saveBtn = e.target.closest('#submitBtn')
+        const submitBtn = e.target.closest('#submitBtn')
         
-        if (saveBtn) {
+        if (submitBtn) {
             const form = e.target.closest('form');
+            const formData = new FormData(form)
+            const url = form.getAttribute('action');
+            const csrfToken = getCookie('csrftoken');
+
+            htmx.ajax('POST', url, {
+                values: formData,
+                headers: {
+                    'X-CSRFToken': csrfToken
+                }
+            })
+            .then(() => {
+                    console.log('success')
+                }
+            )
+            .catch(e => {
+                    console.error('Encounter error on form submission', e)
+                }
+            )
         }
+
+        
     })
 
     //  Initial Run config
-    toggleSidebarMode();
+    const lastSection = localStorage.getItem('lastSection')
+    lastSection ? showSection(lastSection) : showSection('overview')
     initializeDashboard();
 })
 

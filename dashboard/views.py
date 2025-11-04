@@ -80,12 +80,17 @@ class AssetFormAction(APIView):
         form = forms.AssetForm(request.POST, instance=asset)
         if form.is_valid():
             form.save()
-            return redirect('dashboard-home')
 
-    def delete(selt, request, id, format=None):
+            if request.headers.get('HX-Request'):
+                response = HttpResponse()
+                response['HX-Redirect'] = redirect('dashboard-home').url
+                return response
+
+    def delete(self, request, id, format=None):
         asset = get_object_or_404(Asset, id=id)
         asset.delete()
-        return redirect('dashboard-assets')
+        return HttpResponse(status=204)
+
 
 @login_required
 def _staff(request):

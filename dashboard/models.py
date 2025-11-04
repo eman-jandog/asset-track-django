@@ -12,7 +12,7 @@ class Staff(models.Model):
 
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    emai = models.EmailField()
+    email = models.EmailField()
     department = models.CharField(max_length=50, choices=DEPARTMENT_CHOICES, null=True)
     position = models.CharField(max_length=100, null=True)
     address = models.CharField(max_length=200, null=True)
