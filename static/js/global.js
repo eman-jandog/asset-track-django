@@ -87,9 +87,11 @@ function openModal(modalId) {
 function closeModal() {
     document.getElementById("formModal").classList.add('hidden');
     document.body.style.overflow = 'auto';
+    
     // Reset form
     const form = document.querySelector(`#forModal form`);
     if (form) form.reset();
+
     // Reset order total if it's the order modal
     // if (modalId === 'createOrderModal') {
     //     updateOrderTotal();
@@ -340,7 +342,6 @@ function initializeDashboard() {
     setTimeout(initializeCharts, 100);
 }
 
-
 // Document Functions
 function getCookie(name) {
     let cookieValue = null;
@@ -426,16 +427,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 values: formData,
                 headers: {
                     'X-CSRFToken': csrfToken
+                },
+                handler: (elt, info) => {
+                    if (info.xhr.status === 201) {
+                        htmx.ajax('GET', 'assets/', '#assetsSection')
+                        closeModal();
+                    }
+                    else {
+                        console.error('Form submission failed ', info.xhr.status)
+                    }
                 }
             })
-            .then(() => {
-                    console.log('success')
-                }
-            )
-            .catch(e => {
-                    console.error('Encounter error on form submission', e)
-                }
-            )
         }
 
         
