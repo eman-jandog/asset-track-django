@@ -22,6 +22,9 @@ class Staff(models.Model):
     location = models.CharField(max_length=200)
     notes = models.TextField(null=True)
 
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
+
 class Asset(models.Model):
     ASSET_CATEGORY = [
         ('IE', 'IT Equipment'),
