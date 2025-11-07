@@ -12,14 +12,14 @@ class Staff(models.Model):
 
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    email = models.EmailField()
+    email = models.EmailField(null=True)
     department = models.CharField(max_length=50, choices=DEPARTMENT_CHOICES, null=True)
     position = models.CharField(max_length=100, null=True)
     address = models.CharField(max_length=200, null=True)
     location = models.CharField(max_length=200, null=True)
     phone_number = models.CharField(max_length=11, null=True)
     start_date = models.DateField(null=True)
-    location = models.CharField(max_length=200)
+    location = models.CharField(max_length=200, null=True)
     notes = models.TextField(null=True)
 
     def __str__(self):
@@ -58,7 +58,7 @@ class Asset(models.Model):
     location = models.CharField(max_length=200, null=True, blank=True)
     supplier = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField(null=True,blank=True)
-    last_update = models.DateTimeField(auto_now=True, blank=True)
+    last_update = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     def __str__(self):
         return self.name

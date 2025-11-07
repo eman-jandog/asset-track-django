@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
@@ -49,8 +50,18 @@ def orders(request):
     return render(request, 'dashboard/sections/orders.html')
 
 def assets(request):
-    assets = Asset.objects.all()
-    return render(request, 'dashboard/sections/assets.html', {'assets': assets})
+    asset_qs = Asset.objects.all().order_by('id')
+
+    paginator = Paginator(asset_qs, 10)
+
+    page = request.GET.get('page')
+
+    try:
+        asset_page = paginator.get_page(page)
+    except (EmptyPage, PageNotAnInteger):
+        asset_page = paginator.get_page(1)
+
+    return render(request, 'dashboard/sections/assets.html', {'page_obj': asset_page})
 
 class AssetForm(APIView):
 
