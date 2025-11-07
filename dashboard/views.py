@@ -50,18 +50,32 @@ def orders(request):
     return render(request, 'dashboard/sections/orders.html')
 
 def assets(request):
-    asset_qs = Asset.objects.all().order_by('id')
+    asset_qs = Asset.objects.all()
+
+    query = request.GET.get('q', '').strip()
+    if query:
+        asset_qs = asset_qs.filter(
+            Q(name__icontains=query) |
+            Q(track_id__icontains=query) |
+            Q(location_icontains=query) |
+            Q(employee_icontains=query)
+        )
+
+    asset_qs = asset_qs.order_by('id')
 
     paginator = Paginator(asset_qs, 10)
-
     page = request.GET.get('page')
-
     try:
         asset_page = paginator.get_page(page)
     except (EmptyPage, PageNotAnInteger):
         asset_page = paginator.get_page(1)
 
-    return render(request, 'dashboard/sections/assets.html', {'page_obj': asset_page})
+    context = {
+        'page_obj': asset_page,
+        'query': query
+    }
+
+    return render(request, 'dashboard/sections/assets.html', context)
 
 class AssetForm(APIView):
 
