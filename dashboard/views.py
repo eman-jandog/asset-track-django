@@ -5,6 +5,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
+from django.db.models import Q
 from rest_framework.views import APIView
 from rest_framework import status
 from .models import Asset, Order
@@ -52,13 +53,14 @@ def orders(request):
 def assets(request):
     asset_qs = Asset.objects.all()
 
-    query = request.GET.get('q', '').strip()
+    query = request.GET.get('q')
     if query:
+        query = query.strip()
         asset_qs = asset_qs.filter(
             Q(name__icontains=query) |
             Q(track_id__icontains=query) |
-            Q(location_icontains=query) |
-            Q(employee_icontains=query)
+            Q(location__icontains=query) |
+            Q(category__icontains=query)
         )
 
     asset_qs = asset_qs.order_by('id')
@@ -75,7 +77,11 @@ def assets(request):
         'query': query
     }
 
+    if query is not None:
+        return render(request, 'dashboard/tables/assets_table.html', context)
+
     return render(request, 'dashboard/sections/assets.html', context)
+
 
 class AssetForm(APIView):
 
@@ -89,7 +95,7 @@ class AssetForm(APIView):
             form.save()
             return HttpResponse(status=201)
 
-class AssetFormAction(APIView):
+class AssetFormDetail(APIView):
 
     def get(self, request, id, format=None):
         asset = get_object_or_404(Asset, id=id)

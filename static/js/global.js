@@ -446,7 +446,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //  Initial Run config
     const lastSection = localStorage.getItem('lastSection')
     lastSection ? showSection(lastSection) : showSection('overview')
-    initializeDashboard();
+    // initializeDashboard();
 })
 
 
