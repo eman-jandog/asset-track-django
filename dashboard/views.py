@@ -77,11 +77,10 @@ def assets(request):
         'query': query
     }
 
-    if query is not None:
+    if query is not None or page is not None:
         return render(request, 'dashboard/tables/assets_table.html', context)
 
     return render(request, 'dashboard/sections/assets.html', context)
-
 
 class AssetForm(APIView):
 

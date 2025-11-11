@@ -51,7 +51,7 @@ class Asset(models.Model):
     category = models.CharField(max_length=50, choices=ASSET_CATEGORY, null=True, blank=True)
     brand = models.CharField(max_length=50,null=True, blank=True)
     sn = models.CharField(max_length=50, null=True, blank=True)
-    price = models.PositiveIntegerField(default=0, null=True, blank=True)
+    price = models.DecimalField(max_digits=8, decimal_places=2, default=0, null=True, blank=True)
     date_purchase = models.DateField(null=True, blank=True)
     date_warranty = models.DateField(null=True, blank=True)
     status = models.CharField(max_length=50, choices=STATUS_CATEGORY, default='Available', blank=True)
@@ -64,10 +64,19 @@ class Asset(models.Model):
         return self.name
     
 class Order(models.Model):
-    asset = models.ForeignKey(Asset, on_delete=models.CASCADE)
-    staff = models.ForeignKey(User, on_delete=models.CASCADE)
-    order_quantity = models.PositiveIntegerField()
-    date_ordered = models.DateTimeField(auto_now_add=True)
+
+    STATUS_CATEGORY = [
+        ('Delivered', 'Delivered'),
+        ('In Transit', 'In Transit'),
+        ('Processing', 'Processing'),
+        ('Pending', 'Pending')
+    ]
+    order_id = models.CharField(max_length=50, null=True)
+    asset = models.ForeignKey(Asset, on_delete=models.CASCADE, null=True)
+    staff = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    order_quantity = models.PositiveIntegerField(null=True) 
+    status = models.CharField(max_length=50, choices=STATUS_CATEGORY, null=True)
+    date_ordered = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
         return f'{self.asset}'
