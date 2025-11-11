@@ -71,12 +71,32 @@ class Order(models.Model):
         ('Processing', 'Processing'),
         ('Pending', 'Pending')
     ]
+
+    DEPARTMENT_CHOICES = [
+        ('IT', 'Information Technology'),
+        ('HR', 'Human Resource'),
+        ('ADMIN', 'Administrative'),
+        ('FINANCE', 'Accounting & Finance'),
+        ('OPS', 'Operational')
+    ]
+
     order_id = models.CharField(max_length=50, null=True)
-    asset = models.ForeignKey(Asset, on_delete=models.CASCADE, null=True)
-    staff = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    order_quantity = models.PositiveIntegerField(null=True) 
-    status = models.CharField(max_length=50, choices=STATUS_CATEGORY, null=True)
+    supplier = models.CharField(max_length=50, null=True, blank=True)
+    status = models.CharField(max_length=50, choices=STATUS_CATEGORY, null=True, blank=True)
+    department = models.CharField(max_length=50, choices=DEPARTMENT_CHOICES, null=True, blank=True)
     date_ordered = models.DateTimeField(auto_now_add=True, null=True)
+    date_expected = models.DateTimeField(null=True, blank=True)
+    staff = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    instruction = models.TextField(null=True)
 
     def __str__(self):
-        return f'{self.asset}'
+        return f'{self.order_id}'
+
+class OrderItem(models.Model):
+    item = models.CharField(max_length=100, null=True)
+    price = models.DecimalField(max_digits=18, decimal_places=2, null=True, default=0)
+    quantity = models.PositiveIntegerField(null=True) 
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, name='items' ,null=True)
+
+    def __str__(self):
+        return f'{self.item}'   

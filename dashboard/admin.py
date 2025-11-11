@@ -7,8 +7,8 @@ class AssetAdmin(admin.ModelAdmin):
     list_display = ('name', 'track_id')
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('asset', 'staff')
+    list_display = ('item', 'staff')
 
 
 admin.site.register(Asset, AssetAdmin)
-admin.site.register(Order, OrderAdmin)
+# admin.site.register(Order, OrderAdmin)

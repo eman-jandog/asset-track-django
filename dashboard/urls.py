@@ -6,6 +6,7 @@ urlpatterns = [
     path('overview/', views.overview, name='dashboard-overview'),
     path('staff/', views.staff, name='dashboard-staff'),
     path('orders/', views.orders, name='dashboard-orders'),
+    path('orders/form/', views.OrderForm.as_view(), name='dashboard-orders-form'),
     path('assets/', views.assets, name='dashboard-assets'),
     path('assets/form/', views.AssetForm.as_view(), name='dashboard-assets-form'),
     path('assets/form/<int:id>/', views.AssetFormDetail.as_view(), name='dashboard-assets-form-action'),

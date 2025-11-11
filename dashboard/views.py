@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, CreateView
 from django.db.models import Q
 from rest_framework.views import APIView
 from rest_framework import status
@@ -113,17 +113,19 @@ class AssetFormDetail(APIView):
         asset.delete()
         return HttpResponse(status=204)
 
-class OrderForm(APIView):
+class OrderForm(CreateView):
+    model = Order
+    form_class = OrderForm
+    template_name = 'dashboard/forms/order_form.html'
 
-    def get(self, request, format=None):
-        form = forms.AssetForm()
-        return render(request, 'dashboard/forms/asset_form.html', {'form': form})
-    
-    def post(self, request, format=None):
-        form = forms.AssetForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponse(status=201)
+    def get_context_data(self, **kwargs):
+        context = super().__init__(**kwargs)
+        if self.request.POST:
+            context['formset'] = forms.OrderItemFormSet(self.request.POST, instance=self.object)
+        else:
+            context['formset'] = forms.OrderItemFormSet(instance=self.object)
+        return context
+
 
 @login_required
 def _staff(request):

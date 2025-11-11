@@ -1,8 +1,8 @@
 from django import  forms
-from django.forms import ModelForm
+from django.forms import ModelForm, inlineformset_factory
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Field
-from .models import Asset, Order, Staff
+from .models import Asset, Order, Staff, OrderItem
 
 
 class AssetForm(ModelForm):
@@ -149,4 +149,117 @@ class AssetForm(ModelForm):
 class OrderForm(ModelForm):
     class Meta:
         model = Order
-        fields = ['asset','order_quantity']
+        fields = ['supplier', 'department', 'status', 'date_expected', 'instruction']
+        labels = {
+            'supplier': 'Supplier/Store',
+            'department': 'Department/Requisitor'
+        }
+        widgets = {
+            'date_expected': forms.DateInput(attrs={'type':'date'}),
+            'instruction': forms.Textarea(attrs={'row': 3})
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+        self.helper.layout = Layout(
+            Div(
+                Div(
+                    Field(
+                        'supplier',
+                        label_class='block text-sm font-medium text-gray-700 mb-2',
+                        placeholder='e.g., Walter',
+                        css_class='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all'
+                    )
+                ),
+                Div(
+                    Field(
+                        'department',
+                        label_class='block text-sm font-medium text-gray-700 mb-2',
+                        placeholder='Select department',
+                        css_class='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all'
+                    )
+                ),
+                css_class="grid grid-cols-1 md:grid-cols-2 gap-6"
+            ),
+            Div(
+                Div(
+                    Field(
+                        'date_expected',
+                        label_class='block text-sm font-medium text-gray-700 mb-2',
+                        css_class='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all'
+                    )
+                ),
+                Div(
+                    Field(
+                        'status',
+                        label_class='block text-sm font-medium text-gray-700 mb-2',
+                        css_class='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all'
+                    )
+                ),
+                css_class="grid grid-cols-1 md:grid-cols-2 gap-6"
+            ),
+            Div(
+                Field(
+                    'instruction',
+                    label_class='block text-sm font-medium text-gray-700 mb-2',
+                    placeholder='Add reminders for the order',
+                    css_class='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all'
+                ),
+            )
+        )
+
+OrderItemFormSet = inlineformset_factory(
+    Order,
+    OrderItem,
+    fields = ['item', 'quantity', 'price'],
+    extra=1,
+    can_delete=True,
+    widgets={
+        'item': forms.TextInput(attrs={'placeholder': 'eg. Macbook 16'}),
+        'quantity': forms.NumberInput(attrs={'min': 1, 'value': 1}),
+        'price': forms.NumberInput(attrs={'step':'0.01', 'min': 0, 'placeholder': '0.00' })
+    }
+)
+
+class OrderItemForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['item', 'price', 'quantity']
+        labels = {
+            'item': 'Item Name'
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+        self.helper.layout = Layout(
+            Div(
+                Div(
+                    Field(
+                        'item',
+                        css_class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-sm"
+                    )
+                ),
+                Div(
+                    Field(
+                        'quantity',
+                        css_class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-sm"
+                    )
+                ),
+                Div(
+                    Field(
+                        'price',
+                        css_class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-sm"
+                    )
+                ),
+                css_class="order-item grid grid-cols-1 md:grid-cols-5 gap-4 p-4 bg-gray-50 rounded-lg"
+            )
+
+        )
+
+
+
