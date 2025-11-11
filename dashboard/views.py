@@ -113,6 +113,17 @@ class AssetFormDetail(APIView):
         asset.delete()
         return HttpResponse(status=204)
 
+class OrderForm(APIView):
+
+    def get(self, request, format=None):
+        form = forms.AssetForm()
+        return render(request, 'dashboard/forms/asset_form.html', {'form': form})
+    
+    def post(self, request, format=None):
+        form = forms.AssetForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponse(status=201)
 
 @login_required
 def _staff(request):
