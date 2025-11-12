@@ -126,6 +126,24 @@ class OrderForm(CreateView):
             context['formset'] = forms.OrderItemFormSet(instance=self.object)
         return context
 
+    def form_valid(self, form):
+        context = self.get_context_data()
+        formset = context['formset']
+
+        self.object = form.save()
+
+        if formset.is_valid():
+            formset.instance = self.object
+            formset.save()
+            return super().form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_invalid(self, form):
+        context = self.get_context_data()
+        context['form'] = form
+        return self.render_to_response(context)
+
 
 @login_required
 def _staff(request):
