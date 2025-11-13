@@ -12,6 +12,7 @@
                 </div>
                 
                 <form id="createOrderForm" class="p-6 space-y-6">
+                    {% csrf_token %}
                     {% crispy form %}
                     
                     <div class="border-t pt-6">
@@ -27,13 +28,14 @@
                         
                         <div id="orderItemsContainer" class="space-y-4">
                             {{ formset.management_form }}
-                            {% form item_form in formset %}
+                            {% for item_form in formset %}
                             <div class="order-item grid grid-cols-1 md:grid-cols-5 gap-4 p-4 bg-gray-50 rounded-lg">
                                 {% crispy item_form %}
-                                <div class="flex items-end">
+                                <div class="flex items-end mb-3">
                                     <button type="button" class="remove-item w-full bg-red-100 text-red-700 px-3 py-2 rounded-lg hover:bg-red-200 transition-colors text-sm">Remove</button>
                                 </div>
                             </div>
+                            {% endfor %}
                         </div>
                         
                         <div class="mt-4 p-4 bg-blue-50 rounded-lg">
@@ -46,7 +48,7 @@
                    
                     <div class="flex justify-end space-x-4 pt-6 border-t">
                         <button type="button" id="cancelOrderModal" onclick="closeModal()" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">Cancel</button>
-                        <button type="submit" class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">Create Order</button>
+                        <button type="submit" id='submitBtn' class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">Create Order</button>
                     </div>
                 </form>
             </div>

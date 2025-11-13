@@ -211,26 +211,18 @@ class OrderForm(ModelForm):
             )
         )
 
-OrderItemFormSet = inlineformset_factory(
-    Order,
-    OrderItem,
-    fields = ['item', 'quantity', 'price'],
-    extra=1,
-    can_delete=True,
-    widgets={
-        'item': forms.TextInput(attrs={'placeholder': 'eg. Macbook 16'}),
-        'quantity': forms.NumberInput(attrs={'min': 1, 'value': 1}),
-        'price': forms.NumberInput(attrs={'step':'0.01', 'min': 0, 'placeholder': '0.00' })
-    }
-)
-
 class OrderItemForm(forms.ModelForm):
     class Meta:
-        model = Order
+        model = OrderItem
         fields = ['item', 'price', 'quantity']
         labels = {
             'item': 'Item Name'
         }
+        widgets={
+        'item': forms.TextInput(attrs={'placeholder': 'eg. Macbook 16'}),
+        'quantity': forms.NumberInput(attrs={'min': 1, 'value': 1}),
+        'price': forms.NumberInput(attrs={'step':'0.01', 'min': 0, 'placeholder': '0.00' })
+    }
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -238,28 +230,32 @@ class OrderItemForm(forms.ModelForm):
         self.helper.form_tag = False
         self.helper.layout = Layout(
             Div(
-                Div(
-                    Field(
-                        'item',
-                        css_class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-sm"
-                    )
+                Field(
+                    'item',
+                    css_class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-sm"
                 ),
-                Div(
-                    Field(
-                        'quantity',
-                        css_class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-sm"
-                    )
-                ),
-                Div(
-                    Field(
-                        'price',
-                        css_class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-sm"
-                    )
-                ),
-                css_class="order-item grid grid-cols-1 md:grid-cols-5 gap-4 p-4 bg-gray-50 rounded-lg"
+                css_class="md:col-span-2"
+            ),
+            Div(
+                Field(
+                    'quantity',
+                    css_class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-sm"
+                )
+            ),
+            Div(
+                Field(
+                    'price',
+                    css_class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-sm"
+                )
             )
-
         )
 
-
+OrderItemFormSet = inlineformset_factory(
+    Order,
+    OrderItem,
+    form=OrderItemForm,
+    fields = ['item', 'quantity', 'price'],
+    extra=1,
+    can_delete=True,
+)
 

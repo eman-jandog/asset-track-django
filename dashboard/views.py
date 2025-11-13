@@ -115,11 +115,11 @@ class AssetFormDetail(APIView):
 
 class OrderForm(CreateView):
     model = Order
-    form_class = OrderForm
+    form_class = forms.OrderForm
     template_name = 'dashboard/forms/order_form.html'
 
     def get_context_data(self, **kwargs):
-        context = super().__init__(**kwargs)
+        context = super().get_context_data(**kwargs)
         if self.request.POST:
             context['formset'] = forms.OrderItemFormSet(self.request.POST, instance=self.object)
         else:
