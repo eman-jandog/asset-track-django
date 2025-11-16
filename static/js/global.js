@@ -416,7 +416,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('formModal').addEventListener('click', (e) => {
         e.preventDefault()
         const submitBtn = e.target.closest('#submitBtn')
-        
+        const addItem = e.target.closest('#addOrderItem')
+
         if (submitBtn) {
             const form = e.target.closest('form');
             const formData = new FormData(form)
@@ -440,7 +441,28 @@ document.addEventListener('DOMContentLoaded', () => {
             })
         }
 
-        
+        // adding order item listener
+        if (addItem) {
+            const orderItemsContainer = document.getElementById('orderItemsContainer');
+            const totalForms = document.querySelector('#id_orderitem_set-TOTAL_FORMS');
+            
+            const formCount = parseInt(totalForms.value);
+            const emptyForm = orderItemsContainer.querySelector('.order-item').cloneNode(true);
+
+            emptyForm.innerHTML = emptyForm.innerHTML.replace(/__prefix__/g, formCount);
+
+            emptyForm.querySelectorAll('input').forEach(input => {
+                if (input.type !== 'hidden') input.value = '';
+            })
+
+            orderItemsContainer.appendChild(emptyForm)
+            totalForms.value = formCount + 1;
+            // updateTotal();
+        }
+        else if (e.target.classList.contains('remove-item')) {
+            e.target.closest('.order-item').remove();
+            // updateTotal;
+        }
     })
 
     //  Initial Run config
