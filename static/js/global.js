@@ -358,6 +358,7 @@ function getCookie(name) {
     return cookieValue;
 }
 
+
 document.addEventListener('DOMContentLoaded', () => {
     // Sidebar actions
     document.getElementById('logoutBtn').addEventListener('click', handleLogout);
@@ -415,8 +416,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Listen to clicks in form Modal
     document.getElementById('formModal').addEventListener('click', (e) => {
         e.preventDefault()
-        const submitBtn = e.target.closest('#submitBtn')
-        const addItem = e.target.closest('#addOrderItem')
+        const submitBtn = e.target.closest('#submitBtn');
 
         if (submitBtn) {
             const form = e.target.closest('form');
@@ -439,12 +439,39 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             })
+
+            return;
         }
 
         // adding order item listener
+        const addItem = e.target.closest('#addOrderItem');
+        const totalForms = document.querySelector('#id_orderitem_set-TOTAL_FORMS');
+
+        function updateManagementForm() {
+            const forms = document.querySelectorAll('.order-item');
+            totalForms.value = forms.length;
+
+            forms.forEach((form, index) => {
+                form = form.querySelector('div')
+                form.querySelectorAll('div, label, input').forEach(input => {
+                    switch(input.tagName) {
+                        case 'DIV':
+                            input.id = input.id.replace(/-\d+-/g, `-${index}-`);
+                            break;
+                        case 'LABEL':
+                            let value = input.getAttribute('for');
+                            input.setAttribute('for', value.replace(/-\d+-/g, `-${index}-`));
+                            break;
+                        case 'INPUT':
+                            input.name = input.name.replace(/-\d+-/g, `-${index}-`);
+                            break;
+                    }
+                })
+            })
+        }
+
         if (addItem) {
             const orderItemsContainer = document.getElementById('orderItemsContainer');
-            const totalForms = document.querySelector('#id_orderitem_set-TOTAL_FORMS');
             
             const formCount = parseInt(totalForms.value);
             const emptyForm = orderItemsContainer.querySelector('.order-item').cloneNode(true);
@@ -457,12 +484,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             orderItemsContainer.appendChild(emptyForm)
             totalForms.value = formCount + 1;
+            updateManagementForm();
             // updateTotal();
         }
         else if (e.target.classList.contains('remove-item')) {
             e.target.closest('.order-item').remove();
+            updateManagementForm();
             // updateTotal;
         }
+
     })
 
     //  Initial Run config
