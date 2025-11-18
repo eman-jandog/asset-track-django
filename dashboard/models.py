@@ -96,7 +96,7 @@ class OrderItem(models.Model):
     item = models.CharField(max_length=100, null=True)
     price = models.DecimalField(max_digits=18, decimal_places=2, null=True, default=0)
     quantity = models.PositiveIntegerField(null=True) 
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, name='items' ,null=True)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE,null=True)
 
     def __str__(self):
         return f'{self.item}'   

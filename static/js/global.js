@@ -389,7 +389,7 @@ function updateTotal() {
         const price = parseFloat(row.querySelector('[name$="-price"]').value) || 0;
         total += (qty * price);
     })
-    document.getElementById('orderTotal').textContent = `$${total.toFixed(2)}`
+    document.getElementById('orderTotal').textContent = `₱${total.toFixed(2)}`
 }
 
 
@@ -412,19 +412,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // document.getElementById('addAssetForm').addEventListener('submit', handleAssetSubmission);
 
     // Order item management
-    // document.getElementById('addOrderItem').addEventListener('click', addOrderItem);
-
-    // Initial setup for order items
-    document.querySelectorAll('.remove-item').forEach(btn => {
-        btn.addEventListener('click', function() {
-            removeOrderItem(btn)
-        });
-    });
-            
-    // Price calculation for order items
-    document.querySelectorAll('input[name="itemQuantity[]"], input[name="itemPrice[]"]').forEach(input => {
-        input.addEventListener('input', updateOrderTotal);
-    });
+    // document.getElementById('addOrderItem').addEventListener('click', addOrderItem)
 
     // Sidebar buttons navigation
     document.querySelectorAll('.nav-item').forEach(item => {
@@ -456,6 +444,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const form = e.target.closest('form');
             const formData = new FormData(form)
             const url = form.getAttribute('action');
+            const formType = form.dataset.form
             const csrfToken = getCookie('csrftoken');
 
             htmx.ajax('POST', url, {
@@ -465,7 +454,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 handler: (elt, info) => {
                     if (info.xhr.status === 201) {
-                        htmx.ajax('GET', 'assets/', '#assetsSection')
+                        htmx.ajax('GET', `${formType}/`, '#assetsSection')
                         closeModal();
                     }
                     else {

@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 
-                <form id="createOrderForm" class="p-6 space-y-6">
+                <form id="createOrderForm" class="p-6 space-y-6" action="{% url 'dashboard-orders-form' %}" data-form="orders">
                     {% crispy form %}
                     
                     <div class="border-t pt-6">
@@ -40,7 +40,7 @@
                         <div class="mt-4 p-4 bg-blue-50 rounded-lg">
                             <div class="flex justify-between items-center">
                                 <span class="font-semibold text-gray-800">Estimated Total:</span>
-                                <span id="orderTotal" class="text-xl font-bold text-blue-600">$0.00</span>
+                                <span id="orderTotal" class="text-xl font-bold text-blue-600">₱0.00</span>
                             </div>
                         </div>
                     </div>

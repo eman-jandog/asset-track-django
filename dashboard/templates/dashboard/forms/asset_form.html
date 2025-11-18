@@ -11,7 +11,7 @@
                     </div>
                 </div>
 
-                <form method="post" action="{% url 'dashboard-assets-form' %}" class="p-6 space-y-6" hx-target="this" hx-swap="outerHTML">
+                <form method="post" action="{% url 'dashboard-assets-form' %}" class="p-6 space-y-6" hx-target="this" hx-swap="outerHTML" data-form="assets">
                     {% crispy form %}
                     <div class="flex justify-end space-x-4 pt-6 border-t">
                         <button type="button" id="cancelAssetModal" onclick="closeModal()" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">Cancel</button>

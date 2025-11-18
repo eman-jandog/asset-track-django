@@ -132,8 +132,9 @@ class OrderForm(CreateView):
 
         self.object = form.save()
 
+        formset.instance = self.object
+
         if formset.is_valid():
-            formset.instance = self.object
             formset.save()
             return super().form_valid(form)
         else:
