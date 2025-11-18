@@ -358,6 +358,40 @@ function getCookie(name) {
     return cookieValue;
 }
 
+// Order item functions
+function updateManagementForm(totalForms) {
+    const forms = document.querySelectorAll('.order-item');
+    totalForms.value = forms.length;
+
+    forms.forEach((form, index) => {
+        form.querySelectorAll('div, label, input').forEach(input => {
+            switch(input.tagName) {
+                case 'DIV':
+                    input.id = input.id.replace(/-\d+-/g, `-${index}-`);
+                    break;
+                case 'LABEL':
+                    let value = input.getAttribute('for');
+                    input.setAttribute('for', value.replace(/-\d+-/g, `-${index}-`));
+                    break;
+                case 'INPUT':
+                    input.name = input.name.replace(/-\d+-/g, `-${index}-`);
+                    input.id = input.id.replace(/-\d+-/g, `-${index}-`);
+                    break;
+            }   
+        })
+    })
+}
+
+function updateTotal() {
+    let total = 0;
+    document.querySelectorAll('.order-item').forEach(row => {
+        const qty = parseFloat(row.querySelector('[name$="-quantity"]').value) || 0;
+        const price = parseFloat(row.querySelector('[name$="-price"]').value) || 0;
+        total += (qty * price);
+    })
+    document.getElementById('orderTotal').textContent = `$${total.toFixed(2)}`
+}
+
 
 document.addEventListener('DOMContentLoaded', () => {
     // Sidebar actions
@@ -447,53 +481,27 @@ document.addEventListener('DOMContentLoaded', () => {
         const addItem = e.target.closest('#addOrderItem');
         const totalForms = document.querySelector('#id_orderitem_set-TOTAL_FORMS');
 
-        function updateManagementForm() {
-            const forms = document.querySelectorAll('.order-item');
-            totalForms.value = forms.length;
-
-            forms.forEach((form, index) => {
-                form = form.querySelector('div')
-                form.querySelectorAll('div, label, input').forEach(input => {
-                    switch(input.tagName) {
-                        case 'DIV':
-                            input.id = input.id.replace(/-\d+-/g, `-${index}-`);
-                            break;
-                        case 'LABEL':
-                            let value = input.getAttribute('for');
-                            input.setAttribute('for', value.replace(/-\d+-/g, `-${index}-`));
-                            break;
-                        case 'INPUT':
-                            input.name = input.name.replace(/-\d+-/g, `-${index}-`);
-                            break;
-                    }
-                })
-            })
-        }
-
         if (addItem) {
             const orderItemsContainer = document.getElementById('orderItemsContainer');
-            
             const formCount = parseInt(totalForms.value);
             const emptyForm = orderItemsContainer.querySelector('.order-item').cloneNode(true);
-
-            emptyForm.innerHTML = emptyForm.innerHTML.replace(/__prefix__/g, formCount);
 
             emptyForm.querySelectorAll('input').forEach(input => {
                 if (input.type !== 'hidden') input.value = '';
             })
 
+
             orderItemsContainer.appendChild(emptyForm)
             totalForms.value = formCount + 1;
-            updateManagementForm();
-            // updateTotal();
+            updateManagementForm(totalForms);
+            updateTotal();
         }
         
         if (e.target.classList.contains('remove-item') && totalForms.value > 1) {
             e.target.closest('.order-item').remove();
-            updateManagementForm();
-            // updateTotal;
+            updateManagementForm(totalForms);
+            updateTotal();
         }
-
     })
 
     //  Initial Run config
