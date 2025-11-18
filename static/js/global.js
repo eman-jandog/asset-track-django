@@ -487,7 +487,8 @@ document.addEventListener('DOMContentLoaded', () => {
             updateManagementForm();
             // updateTotal();
         }
-        else if (e.target.classList.contains('remove-item')) {
+        
+        if (e.target.classList.contains('remove-item') && totalForms.value > 1) {
             e.target.closest('.order-item').remove();
             updateManagementForm();
             // updateTotal;
