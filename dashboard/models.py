@@ -90,7 +90,7 @@ class Order(models.Model):
     instruction = models.TextField(null=True)
 
     def __str__(self):
-        return f'{self.order_id}'
+        return f'{self.order_id}'   
 
 class OrderItem(models.Model):
     item = models.CharField(max_length=100, null=True)

@@ -8,7 +8,7 @@ from django.views.generic import TemplateView, CreateView
 from django.db.models import Q
 from rest_framework.views import APIView
 from rest_framework import status
-from .models import Asset, Order
+from .models import Asset, Order, OrderItem
 from . import forms
 
 
@@ -48,7 +48,30 @@ def staff(request):
     return render(request, 'dashboard/sections/staff.html')
 
 def orders(request):
-    return render(request, 'dashboard/sections/orders.html')
+    order_qs = Order.objects.prefetch_related('orderitem_set').all()
+
+    for order in order_qs:
+        print(order.orderitem_set.all())
+
+    
+    paginator = Paginator(order_qs, 10)
+
+    page = request.GET.get('page')
+    try:
+        order_page = paginator.get_page(page)
+    except (EmptyPage, PageNotAnInteger):
+        order_page = paginator.get_page(1)
+
+    context = {
+        'page_obj': order_page,
+        'query': '',
+        'data': order_qs
+    }
+
+    if page is not None:
+        return render(request, 'dashboard/tables/orders_table.html', context)
+    
+    return render(request, 'dashboard/sections/orders.html', context)
 
 def assets(request):
     asset_qs = Asset.objects.all()
