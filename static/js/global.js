@@ -454,7 +454,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 handler: (elt, info) => {
                     if (info.xhr.status === 201) {
-                        htmx.ajax('GET', `${formType}/`, '#assetsSection')
+                        htmx.ajax('GET', `${formType}/`, `#${formType}Section`)
                         closeModal();
                     }
                     else {

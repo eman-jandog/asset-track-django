@@ -136,6 +136,26 @@ class OrderForm(CreateView):
 
         if formset.is_valid():
             formset.save()
+
+            if self.request.headers['Hx-Request']:
+                # Option 1: Return nothing → just close modal
+                response = HttpResponse("")
+                response.status_code = 201
+                # response['HX-Trigger'] = 'orderCreated'  # Trigger event for JS
+
+                # Option 2: Return success message (nice feedback)
+                # response = render(self.request, 'orders/partials/success_message.html')
+                # response['HX-Trigger'] = 'orderCreated'
+
+                # # Option 3 (Most Common): Re-render empty form so user can add another
+                # context = self.get_context_data()
+                # context['form'] = OrderForm()  # Clean main form
+                # context['formset'] = OrderItemFormSet()  # One empty row
+                # response = render(self.request, self.template_name, context)
+                # response['HX-Retarget'] = '#order-modal-content'  # If inside 
+                
+                return response
+
             return super().form_valid(form)
         else:
             return self.form_invalid(form)
