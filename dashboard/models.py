@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from decimal import Decimal
 
 class Staff(models.Model):
     DEPARTMENT_CHOICES = [
@@ -90,13 +91,23 @@ class Order(models.Model):
     instruction = models.TextField(null=True)
 
     def __str__(self):
-        return f'{self.order_id}'   
+        return f'{self.order_id}'
+
+    def get_items(self):
+        return self.items.all()
+
+    def get_total(self):
+        total = sum(item.total() for item in self.get_items())
+        return total.quantize(Decimal('0.01'))
 
 class OrderItem(models.Model):
     item = models.CharField(max_length=100, null=True)
     price = models.DecimalField(max_digits=18, decimal_places=2, null=True, default=0)
     quantity = models.PositiveIntegerField(null=True) 
-    order = models.ForeignKey(Order, on_delete=models.CASCADE,null=True)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE,null=True, related_name='items')
 
     def __str__(self):
         return f'{self.item}'   
+
+    def total(self):
+        return self.price * self.quantity

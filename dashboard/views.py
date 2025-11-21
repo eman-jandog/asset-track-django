@@ -48,11 +48,7 @@ def staff(request):
     return render(request, 'dashboard/sections/staff.html')
 
 def orders(request):
-    order_qs = Order.objects.prefetch_related('orderitem_set').all()
-
-    for order in order_qs:
-        print(order.orderitem_set.all())
-
+    order_qs = Order.objects.prefetch_related('items').annotate()
     
     paginator = Paginator(order_qs, 10)
 
