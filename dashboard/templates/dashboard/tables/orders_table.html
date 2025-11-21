@@ -44,7 +44,7 @@
             {% if page_obj.paginator.count > 0 %}
                 <nav 
                     hx-target="#assetTable"
-                    hx-include="[name='q']"
+                    hx-include="[id='orderSearch']"
                     class="flex item-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6" aria-label="Pagination">
                     <div class="flex justify-between flex-1 sm:hidden">
                         {% if page_obj.has_previous %}

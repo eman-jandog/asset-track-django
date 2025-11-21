@@ -48,7 +48,16 @@ def staff(request):
     return render(request, 'dashboard/sections/staff.html')
 
 def orders(request):
-    order_qs = Order.objects.prefetch_related('items').annotate()
+    order_qs = Order.objects.prefetch_related('items').all()
+
+    query = request.GET.get('q')
+
+    if query:
+        order_qs = order_qs.filter(
+            Q(items__item__icontains=query) |
+            Q(supplier__icontains=query) |
+            Q(order_id__icontains=query)
+        )
     
     paginator = Paginator(order_qs, 10)
 
@@ -60,11 +69,10 @@ def orders(request):
 
     context = {
         'page_obj': order_page,
-        'query': '',
-        'data': order_qs
+        'query': query
     }
 
-    if page is not None:
+    if page is not None or query is not None:
         return render(request, 'dashboard/tables/orders_table.html', context)
     
     return render(request, 'dashboard/sections/orders.html', context)

@@ -55,11 +55,11 @@
             {% if page_obj.paginator.count > 0 %}
                 <nav 
                     hx-target="#assetTable"
-                    hx-include="[name='q']"
+                    hx-include="[id='assetSearch']"
                     class="flex item-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6" aria-label="Pagination">
                     <div class="flex justify-between flex-1 sm:hidden">
                         {% if page_obj.has_previous %}
-                            <a hx-get="assets?q={{ query }}&page={{ page_obj.previous_page_number }"
+                            <a hx-get="assets?q={{ query }}&page={{ page_obj.previous_page_number }}"
                             class="relative cursor-default inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
                                 Previous
                             </a>
