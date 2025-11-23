@@ -79,14 +79,20 @@ function openModal(modalId) {
     htmx.ajax('GET', `${modalId}/form/`, {
         'target': '#formModal',
     })
-
-    document.getElementById('formModal').classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
+    .then(() => {
+        document.getElementById('formModal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    })
+    .catch(e => {
+        console.error('Failed to get form', e)
+    })
+    
 }
 
 function closeModal() {
     document.getElementById("formModal").classList.add('hidden');
     document.body.style.overflow = 'auto';
+    
     
     // Reset form
     const form = document.querySelector(`#forModal form`);
@@ -173,9 +179,13 @@ function updateAssetItem(id) {
     htmx.ajax('GET', `assets/form/${id}/`, {
         'target': '#formModal'
     })
-
-    document.getElementById('formModal').classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
+    .then(() => {
+        document.getElementById('formModal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    })
+    .catch(e => {
+        console.error('Failed to get form', e)
+    })
 }
 
 function deleteAssetItem(id) {
