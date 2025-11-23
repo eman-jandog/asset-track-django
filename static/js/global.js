@@ -478,7 +478,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // adding order item listener
         const addItem = e.target.closest('#addOrderItem');
-        const totalForms = document.querySelector('#id_orderitem_set-TOTAL_FORMS');
+        const totalForms = document.querySelector('#id_items-TOTAL_FORMS');
 
         if (addItem) {
             const orderItemsContainer = document.getElementById('orderItemsContainer');

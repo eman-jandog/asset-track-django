@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, View
 from django.db.models import Q
 from rest_framework.views import APIView
 from rest_framework import status
@@ -140,7 +140,7 @@ class AssetFormDetail(APIView):
         asset.delete()
         return HttpResponse(status=204)
 
-class OrderForm(CreateView):
+class _OrderForm(CreateView):
     model = Order
     form_class = forms.OrderForm
     template_name = 'dashboard/forms/order_form.html'
@@ -191,6 +191,55 @@ class OrderForm(CreateView):
         context = self.get_context_data()
         context['form'] = form
         return self.render_to_response(context)
+
+class OrderForm(View):
+    template_name = 'dashboard/forms/order_form.html'
+
+    def get(self, request, pk=None):
+        if pk:
+            order = get_object_or_404(Order, pk=pk)
+            form = forms.OrderForm(instance=order)
+            formset = forms.OrderItemFormSet(instance=order)
+        else:
+            order = None
+            form = forms.OrderForm
+            formset = forms.OrderItemFormSet()
+        
+        context = {
+            'form': form,
+            'formset':  formset,
+            'order': order
+        }
+
+        return render(request, self.template_name, context)
+
+    def post(self, request, pk=None):
+        if pk:
+            order = get_object_or_404(Order, pk=pk)
+        else:
+            order = None
+        
+        form = forms.OrderForm(request.POST, instance=order)
+        formset = forms.OrderItemFormSet(request.POST, instance=order)
+
+        if form.is_valid() and formset.is_valid():
+            self.object = form.save()
+            formset.instance = self.object
+            formset.save()
+
+            if request.headers['HX-Request']:
+                response = HttpResponse("")
+                response.status_code = 201
+                return response
+        
+        context = {
+            'form': form,
+            'formset':  formset,
+            'order': order
+        }
+
+        return render(request, self.template_name, context)
+
 
 
 @login_required
