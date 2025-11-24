@@ -197,7 +197,7 @@ function deleteItem(id, section) {
         },
         handler: (elt, info) => {
             if (info.xhr.status == 204) {
-                htmx.ajax('GET', `${section}/${id}/`, `#${section}Section`)
+                htmx.ajax('GET', `${section}/`, `#${section}Section`)
             }
             else {
                 console.error("Failed to delete")

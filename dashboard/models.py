@@ -85,8 +85,8 @@ class Order(models.Model):
     supplier = models.CharField(max_length=50, null=True, blank=True)
     status = models.CharField(max_length=50, choices=STATUS_CATEGORY, null=True, blank=True)
     department = models.CharField(max_length=50, choices=DEPARTMENT_CHOICES, null=True, blank=True)
-    date_ordered = models.DateTimeField(auto_now_add=True, null=True)
-    date_expected = models.DateTimeField(null=True, blank=True)
+    date_ordered = models.DateTimeField(auto_now_add=True)
+    date_expected = models.DateField(null=True, blank=True)
     staff = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     instruction = models.TextField(null=True)
 
