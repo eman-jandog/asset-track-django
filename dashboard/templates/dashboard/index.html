@@ -7,7 +7,7 @@ AssetTrack Overview
     <main id="mainSection" class="p-6 flex-1">
         <div id="overviewSection" class="section-content fade-in" hx-target="this" hx-get="{% url 'dashboard-overview' %}" hx-trigger="load"></div>
         <div id="staffSection" class="section-content fade-in hidden" hx-target="this" hx-get="{% url 'dashboard-staff' %}" hx-trigger="load"></div>
-        <div id="ordersSection" class="section-content fade-in hidden" hx-target="this" hx-get="{% url 'dashboard-orders' %}" hx-trigger="load"></div>
+        <div id="ordersSection" class="section-content fade-in hidden" hx-target="this" hx-get="{% url 'orders' %}" hx-trigger="load"></div>
         <div id="assetsSection" class="section-content fade-in hidden" hx-target="this" hx-get="{% url 'dashboard-assets' %}" hx-trigger="load"></div>
         <div id="profileSection" class="section-content fade-in hidden" hx-target="this" hx-get="{% url 'user-profile' %}" hx-trigger="load"></div>
     </main>   

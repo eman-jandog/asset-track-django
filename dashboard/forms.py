@@ -1,5 +1,5 @@
 from django import  forms
-from django.forms import ModelForm, inlineformset_factory
+from django.forms import ModelForm, inlineformset_factory, HiddenInput
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Field
 from .models import Asset, Order, Staff, OrderItem
@@ -214,21 +214,24 @@ class OrderForm(ModelForm):
 class OrderItemForm(forms.ModelForm):
     class Meta:
         model = OrderItem
-        fields = ['item', 'price', 'quantity']
+        fields = ['item', 'quantity', 'price']
+        widgets = {
+            'item': forms.TextInput(attrs={'placeholder': 'eg. Macbook 16'}),
+            'quantity': forms.NumberInput(attrs={'min': 1, 'value': 1}),
+            'price': forms.NumberInput(attrs={'step':'0.01', 'min': 0, 'placeholder': '0.00' })
+        }
         labels = {
             'item': 'Item Name'
         }
-        widgets={
-        'item': forms.TextInput(attrs={'placeholder': 'eg. Macbook 16'}),
-        'quantity': forms.NumberInput(attrs={'min': 1, 'value': 1}),
-        'price': forms.NumberInput(attrs={'step':'0.01', 'min': 0, 'placeholder': '0.00' })
-    }
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_tag = False
         self.helper.layout = Layout(
+            Field('id', type='hidden'),
+            Field('order', type='hidden'),
+            Field('DELETE', type='hidden'),
             Div(
                 Field(
                     'item',
@@ -254,7 +257,6 @@ OrderItemFormSet = inlineformset_factory(
     Order,
     OrderItem,
     form=OrderItemForm,
-    fields = ['item', 'quantity', 'price'],
     extra=1,
     can_delete=True,
 )

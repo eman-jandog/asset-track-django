@@ -76,7 +76,7 @@ function toggleUserMenu() {
 
 // Modal functions
 function openModal(modalId) {
-    htmx.ajax('GET', `${modalId}/form/`, {
+    htmx.ajax('GET', `${modalId}/create/`, {
         'target': '#formModal',
     })
     .then(() => {
@@ -175,8 +175,9 @@ function removeOrderItem(btn) {
     }
 }
 
-function updateAssetItem(id) {
-    htmx.ajax('GET', `assets/form/${id}/`, {
+function updateItem(id, section) {
+
+    htmx.ajax('GET', `${section}/${id}/`, {
         'target': '#formModal'
     })
     .then(() => {
@@ -188,16 +189,15 @@ function updateAssetItem(id) {
     })
 }
 
-function deleteAssetItem(id) {
-
+function deleteItem(id, section) {
     const csrfToken = getCookie('csrftoken');
-    htmx.ajax('DELETE', `assets/form/${id}/` , {
+    htmx.ajax('DELETE', `${section}/${id}/` , {
         headers: {
             'X-CSRFToken': csrfToken
         },
         handler: (elt, info) => {
             if (info.xhr.status == 204) {
-                htmx.ajax('GET', 'assets/', '#assetsSection')
+                htmx.ajax('GET', `${section}/${id}/`, `#${section}Section`)
             }
             else {
                 console.error("Failed to delete")

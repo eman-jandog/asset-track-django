@@ -140,58 +140,6 @@ class AssetFormDetail(APIView):
         asset.delete()
         return HttpResponse(status=204)
 
-class _OrderForm(CreateView):
-    model = Order
-    form_class = forms.OrderForm
-    template_name = 'dashboard/forms/order_form.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if self.request.POST:
-            context['formset'] = forms.OrderItemFormSet(self.request.POST, instance=self.object)
-        else:
-            context['formset'] = forms.OrderItemFormSet(instance=self.object)
-        return context
-
-    def form_valid(self, form):
-        context = self.get_context_data()
-        formset = context['formset']
-
-        self.object = form.save()
-
-        formset.instance = self.object
-
-        if formset.is_valid():
-            formset.save()
-
-            if self.request.headers['Hx-Request']:
-                # Option 1: Return nothing → just close modal
-                response = HttpResponse("")
-                response.status_code = 201
-                # response['HX-Trigger'] = 'orderCreated'  # Trigger event for JS
-
-                # Option 2: Return success message (nice feedback)
-                # response = render(self.request, 'orders/partials/success_message.html')
-                # response['HX-Trigger'] = 'orderCreated'
-
-                # # Option 3 (Most Common): Re-render empty form so user can add another
-                # context = self.get_context_data()
-                # context['form'] = OrderForm()  # Clean main form
-                # context['formset'] = OrderItemFormSet()  # One empty row
-                # response = render(self.request, self.template_name, context)
-                # response['HX-Retarget'] = '#order-modal-content'  # If inside 
-                
-                return response
-
-            return super().form_valid(form)
-        else:
-            return self.form_invalid(form)
-
-    def form_invalid(self, form):
-        context = self.get_context_data()
-        context['form'] = form
-        return self.render_to_response(context)
-
 class OrderForm(View):
     template_name = 'dashboard/forms/order_form.html'
 
@@ -200,6 +148,8 @@ class OrderForm(View):
             order = get_object_or_404(Order, pk=pk)
             form = forms.OrderForm(instance=order)
             formset = forms.OrderItemFormSet(instance=order)
+            formset.extra = 0
+            self.template_name = 'dashboard/forms/order_form_update.html'
         else:
             order = None
             form = forms.OrderForm
@@ -220,17 +170,18 @@ class OrderForm(View):
             order = None
         
         form = forms.OrderForm(request.POST, instance=order)
-        formset = forms.OrderItemFormSet(request.POST, instance=order)
+        formset = forms.OrderItemFormSet(request.POST, instance=order or Order())
 
-        if form.is_valid() and formset.is_valid():
+        if form.is_valid():
             self.object = form.save()
-            formset.instance = self.object
-            formset.save()
+            if formset.is_valid():
+                formset.instance = self.object
+                formset.save()
 
-            if request.headers['HX-Request']:
-                response = HttpResponse("")
-                response.status_code = 201
-                return response
+                if request.headers['HX-Request']:
+                    return HttpResponse(status=201)
+            else:
+                pass
         
         context = {
             'form': form,
@@ -240,7 +191,10 @@ class OrderForm(View):
 
         return render(request, self.template_name, context)
 
-
+    def delete(self, request, pk):
+        order =  get_object_or_404(Order, pk=pk)
+        order.delete()
+        return HttpResponse(status=204)
 
 @login_required
 def _staff(request):
