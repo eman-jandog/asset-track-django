@@ -81,7 +81,7 @@ class Order(models.Model):
         ('OPS', 'Operational')
     ]
 
-    order_id = models.CharField(max_length=50, null=True)
+    track_id = models.CharField(max_length=50, null=True)
     supplier = models.CharField(max_length=50, null=True, blank=True)
     status = models.CharField(max_length=50, choices=STATUS_CATEGORY, null=True, blank=True)
     department = models.CharField(max_length=50, choices=DEPARTMENT_CHOICES, null=True, blank=True)

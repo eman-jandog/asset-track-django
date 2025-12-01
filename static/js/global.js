@@ -453,10 +453,27 @@ document.addEventListener('DOMContentLoaded', () => {
         if (submitBtn) {
             const form = e.target.closest('form');
             const formData = new FormData(form)
+            
             const url = form.getAttribute('action');
-            const formType = form.dataset.form
             const csrfToken = getCookie('csrftoken');
+            const formType = form.dataset.form
 
+            let prefix;
+            switch(formType) {
+                case 'assets':
+                    prefix = 'AST';
+                    break;
+                case 'orders':
+                    prefix = 'ORD';
+                    break;
+                default:
+                    prefix = 'TRACK'
+                    break;
+            }
+
+            formData.set("track_id:", `${prefix}-${Date.now().toString().slice(-6)}`)
+
+            console.log()
             htmx.ajax('POST', url, {
                 values: formData,
                 headers: {
