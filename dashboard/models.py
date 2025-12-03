@@ -91,7 +91,7 @@ class Order(models.Model):
     instruction = models.TextField(null=True)
 
     def __str__(self):
-        return f'{self.order_id}'
+        return f'{self.track_id}'
 
     def get_items(self):
         return self.items.all()

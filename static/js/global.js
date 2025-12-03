@@ -471,9 +471,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     break;
             }
 
-            formData.set("track_id:", `${prefix}-${Date.now().toString().slice(-6)}`)
+            formData.set("track_id", `${prefix}-${Date.now().toString().slice(-6)}`);
 
-            console.log()
             htmx.ajax('POST', url, {
                 values: formData,
                 headers: {

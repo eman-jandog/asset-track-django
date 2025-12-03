@@ -170,7 +170,8 @@ class OrderForm(View):
             order = None
         
         form = forms.OrderForm(request.POST, instance=order)
-        formset = forms.OrderItemFormSet(request.POST, instance=order or Order())
+        
+        formset = forms.OrderItemFormSet(request.POST, instance=order)
 
         if form.is_valid():
             self.object = form.save()
