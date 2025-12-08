@@ -12,6 +12,9 @@
                 </div>
                 
                 <form id="createOrderForm" class="p-6 space-y-6" action="{% url 'orders-action' pk=order.id %}" data-form="orders">
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                    {% endif %}
                     {% crispy form %}
                     
                     <div class="border-t pt-6">
@@ -26,9 +29,18 @@
                         </div>
                         
                         <div id="orderItemsContainer" oninput="updateTotal()" class="space-y-4">
+                            <!-- Show formset management errors (e.g., too few/many forms) -->
+                            {% if formset.non_form_errors %}
+                                <div class="alert alert-danger">{{ formset.non_form_errors }}</div>
+                            {% endif %}
                             {{ formset.management_form }}
                             {% for item_form in formset %}
                             <div class="order-item grid grid-cols-1 md:grid-cols-5 gap-4 p-4 bg-gray-50 rounded-lg">
+                                {% if item_form.errors %}
+                                    <div class="alert alert-warning">
+                                        {{ item_form.errors }}
+                                    </div>
+                                {% endif %}
                                 {% crispy item_form %}
                                 <div class="flex items-end mb-3">
                                     <button type="button" class="remove-item w-full bg-red-100 text-red-700 px-3 py-2 rounded-lg hover:bg-red-200 transition-colors text-sm">Remove</button>

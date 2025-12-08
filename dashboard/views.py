@@ -157,13 +157,13 @@ class OrderForm(View):
         
         context = {
             'form': form,
-            'formset':  formset,
-            'order': order
+            'formset':  formset
         }
 
         return render(request, self.template_name, context)
 
     def post(self, request, pk=None):
+
         if pk:
             order = get_object_or_404(Order, pk=pk)
         else:
@@ -173,24 +173,21 @@ class OrderForm(View):
         
         formset = forms.OrderItemFormSet(request.POST, instance=order)
 
-        if form.is_valid():
+        if form.is_valid() and formset.is_valid():
             self.object = form.save()
-            if formset.is_valid():
-                formset.instance = self.object
-                formset.save()
+            formset.instance = self.object
+            formset.save()  
 
-                if request.headers['HX-Request']:
-                    return HttpResponse(status=201)
-            else:
-                pass
-        
-        context = {
-            'form': form,
-            'formset':  formset,
-            'order': order
-        }
+            if request.headers['HX-Request']:
+                return HttpResponse(status=201)  
 
-        return render(request, self.template_name, context)
+        else:
+            context = {
+                'form': form,
+                'formset':  formset
+            }
+
+            return render(request, self.template_name, context, status=400)
 
     def delete(self, request, pk):
         order =  get_object_or_404(Order, pk=pk)
