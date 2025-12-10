@@ -120,6 +120,7 @@ class AssetForm(APIView):
         if form.is_valid():
             form.save()
             return HttpResponse(status=201)
+        return render(request, 'dashboard/forms/asset_form.html', {'form': form})
 
 class AssetFormDetail(APIView):
 

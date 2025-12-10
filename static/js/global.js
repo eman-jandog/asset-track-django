@@ -77,7 +77,7 @@ function toggleUserMenu() {
 // Modal functions
 function openModal(modalId) {
     htmx.ajax('GET', `${modalId}/create/`, {
-        'target': '#formModal',
+        target: '#formModal',
     })
     .then(() => {
         document.getElementById('formModal').classList.remove('hidden');
@@ -476,6 +476,7 @@ document.addEventListener('DOMContentLoaded', () => {
             htmx.ajax('POST', url, {
                 values: formData,
                 swap: 'innerHTML',
+                target: '#formModal',
                 headers: {
                     'X-CSRFToken': csrfToken
                 },
