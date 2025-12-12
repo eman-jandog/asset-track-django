@@ -475,7 +475,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             htmx.ajax('POST', url, {
                 values: formData,
-                swap: 'innerHTML',
                 target: '#formModal',
                 headers: {
                     'X-CSRFToken': csrfToken

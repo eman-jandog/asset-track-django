@@ -149,7 +149,7 @@ class AssetForm(ModelForm):
 class OrderForm(ModelForm):
     class Meta:
         model = Order
-        fields = ['supplier', 'department', 'status', 'date_expected', 'instruction']
+        fields = ['supplier', 'department', 'status', 'date_expected', 'instruction', 'track_id']
         labels = {
             'supplier': 'Supplier/Store',
             'department': 'Department/Requisitor'
@@ -164,52 +164,53 @@ class OrderForm(ModelForm):
 
         self.helper = FormHelper()
         self.helper.form_tag = False
-        # self.helper.layout = Layout(
-        #     Div(
-        #         Div(
-        #             Field(
-        #                 'supplier',
-        #                 label_class='block text-sm font-medium text-gray-700 mb-2',
-        #                 placeholder='e.g., Walter',
-        #                 css_class='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all'
-        #             )
-        #         ),
-        #         Div(
-        #             Field(
-        #                 'department',
-        #                 label_class='block text-sm font-medium text-gray-700 mb-2',
-        #                 placeholder='Select department',
-        #                 css_class='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all'
-        #             )
-        #         ),
-        #         css_class="grid grid-cols-1 md:grid-cols-2 gap-6"
-        #     ),
-        #     Div(
-        #         Div(
-        #             Field(
-        #                 'date_expected',
-        #                 label_class='block text-sm font-medium text-gray-700 mb-2',
-        #                 css_class='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all'
-        #             )
-        #         ),
-        #         Div(
-        #             Field(
-        #                 'status',
-        #                 label_class='block text-sm font-medium text-gray-700 mb-2',
-        #                 css_class='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all'
-        #             )
-        #         ),
-        #         css_class="grid grid-cols-1 md:grid-cols-2 gap-6"
-        #     ),
-        #     Div(
-        #         Field(
-        #             'instruction',
-        #             label_class='block text-sm font-medium text-gray-700 mb-2',
-        #             placeholder='Add reminders for the order',
-        #             css_class='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all'
-        #         ),
-        #     )
-        # )
+        self.helper.layout = Layout(
+            Field('track_id', type='hidden'),
+            Div(
+                Div(
+                    Field(
+                        'supplier',
+                        label_class='block text-sm font-medium text-gray-700 mb-2',
+                        placeholder='e.g., Walter',
+                        css_class='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all'
+                    )
+                ),
+                Div(
+                    Field(
+                        'department',
+                        label_class='block text-sm font-medium text-gray-700 mb-2',
+                        placeholder='Select department',
+                        css_class='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all'
+                    )
+                ),
+                css_class="grid grid-cols-1 md:grid-cols-2 gap-6"
+            ),
+            Div(
+                Div(
+                    Field(
+                        'date_expected',
+                        label_class='block text-sm font-medium text-gray-700 mb-2',
+                        css_class='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all'
+                    )
+                ),
+                Div(
+                    Field(
+                        'status',
+                        label_class='block text-sm font-medium text-gray-700 mb-2',
+                        css_class='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all'
+                    )
+                ),
+                css_class="grid grid-cols-1 md:grid-cols-2 gap-6"
+            ),
+            Div(
+                Field(
+                    'instruction',
+                    label_class='block text-sm font-medium text-gray-700 mb-2',
+                    placeholder='Add reminders for the order',
+                    css_class='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all'
+                ),
+            )
+        )
 
 class OrderItemForm(forms.ModelForm):
     class Meta:
@@ -228,30 +229,30 @@ class OrderItemForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_tag = False
-        # self.helper.layout = Layout(
-        #     Field('id', type='hidden'),
-        #     Field('order', type='hidden'),
-        #     Field('DELETE', type='hidden'),
-        #     Div(
-        #         Field(
-        #             'item',
-        #             css_class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-sm"
-        #         ),
-        #         css_class="md:col-span-2"
-        #     ),
-        #     Div(
-        #         Field(
-        #             'quantity',
-        #             css_class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-sm"
-        #         )
-        #     ),
-        #     Div(
-        #         Field(
-        #             'price',
-        #             css_class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-sm"
-        #         )
-        #     )
-        # )
+        self.helper.layout = Layout(
+            Field('id', type='hidden'),
+            Field('order', type='hidden'),
+            Field('DELETE', type='hidden'),
+            Div(
+                Field(
+                    'item',
+                    css_class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-sm"
+                ),
+                css_class="md:col-span-2"
+            ),
+            Div(
+                Field(
+                    'quantity',
+                    css_class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-sm"
+                )
+            ),
+            Div(
+                Field(
+                    'price',
+                    css_class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-sm"
+                )
+            )
+        )
 
 OrderItemFormSet = inlineformset_factory(
     Order,

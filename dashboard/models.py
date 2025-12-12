@@ -46,7 +46,7 @@ class Asset(models.Model):
         ('Retired', 'Retired')
     ]
 
-    name = models.CharField(max_length=100, null=True)
+    name = models.CharField(max_length=100)
     employee = models.ForeignKey(Staff, on_delete=models.PROTECT, null=True)
     track_id = models.CharField(max_length=100, null=True)
     category = models.CharField(max_length=50, choices=ASSET_CATEGORY, null=True)

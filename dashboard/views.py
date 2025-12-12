@@ -120,7 +120,7 @@ class AssetForm(APIView):
         if form.is_valid():
             form.save()
             return HttpResponse(status=201)
-        return render(request, 'dashboard/forms/asset_form.html', {'form': form})
+        return render(request, 'dashboard/forms/asset_form.html', {'form': form}, status=400)
 
 class AssetFormDetail(APIView):
 
@@ -158,7 +158,8 @@ class OrderForm(View):
         
         context = {
             'form': form,
-            'formset':  formset
+            'formset':  formset,
+            'order': order  
         }
 
         return render(request, self.template_name, context)
