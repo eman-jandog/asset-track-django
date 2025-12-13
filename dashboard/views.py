@@ -124,20 +124,20 @@ class AssetForm(APIView):
 
 class AssetFormDetail(APIView):
 
-    def get(self, request, id, format=None):
-        asset = get_object_or_404(Asset, id=id)
+    def get(self, request, pk, format=None):
+        asset = get_object_or_404(Asset, pk=pk)
         form = forms.AssetForm(instance=asset)
-        return render(request, 'dashboard/forms/asset_form_update.html', {'form': form, 'id': id})
+        return render(request, 'dashboard/forms/asset_form_update.html', {'form': form, 'pk': pk})
 
-    def post(self, request, id, format=None):
-        asset = get_object_or_404(Asset, id=id)
+    def post(self, request, pk, format=None):
+        asset = get_object_or_404(Asset, pk=pk)
         form = forms.AssetForm(request.POST, instance=asset)
         if form.is_valid():
             form.save()
             return HttpResponse(status=201)
 
-    def delete(self, request, id, format=None):
-        asset = get_object_or_404(Asset, id=id)
+    def delete(self, request, pk, format=None):
+        asset = get_object_or_404(Asset, pk=pk)
         asset.delete()
         return HttpResponse(status=204)
 

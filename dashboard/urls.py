@@ -9,8 +9,8 @@ urlpatterns = [
     path('orders/create/', views.OrderForm.as_view(), name='orders-create'),
     path('orders/<int:pk>/', views.OrderForm.as_view(), name='orders-action'),
     path('assets/', views.assets, name='dashboard-assets'),
-    path('assets/create/', views.AssetForm.as_view(), name='dashboard-assets-form'),
-    path('assets/form/<int:id>/', views.AssetFormDetail.as_view(), name='dashboard-assets-form-action'),
+    path('assets/create/', views.AssetForm.as_view(), name='assets-create'),
+    path('assets/<int:pk>/', views.AssetFormDetail.as_view(), name='assets-action'),
 
     # # path('staff/', views.staff, name='staff'),
     # path('staff/detail/<int:id>', views.staff_detail, name='dashboard-staff-detail'),
