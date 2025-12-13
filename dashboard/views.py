@@ -109,34 +109,47 @@ def assets(request):
 
     return render(request, 'dashboard/sections/assets.html', context)
 
-class AssetForm(APIView):
+class AssetForm(View):
+    template_name = 'dashboard/forms/asset_form.html'
+ 
+    def get(self, request, pk=None):
 
-    def get(self, request, format=None):
-        form = forms.AssetForm()
-        return render(request, 'dashboard/forms/asset_form.html', {'form': form})
-    
-    def post(self, request, format=None):
-        form = forms.AssetForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponse(status=201)
-        return render(request, 'dashboard/forms/asset_form.html', {'form': form}, status=400)
-
-class AssetFormDetail(APIView):
-
-    def get(self, request, pk, format=None):
-        asset = get_object_or_404(Asset, pk=pk)
+        if pk:
+            asset = Asset.objects.get(pk=pk)
+            id = asset.id
+            self.template_name = 'dashboard/forms/asset_form_update.html'
+        else:
+            asset = None
+            id = None
+            
         form = forms.AssetForm(instance=asset)
-        return render(request, 'dashboard/forms/asset_form_update.html', {'form': form, 'pk': pk})
 
-    def post(self, request, pk, format=None):
-        asset = get_object_or_404(Asset, pk=pk)
-        form = forms.AssetForm(request.POST, instance=asset)
+        context = {
+            'form': form,
+            'id': id
+        }
+
+        return render(request, self.template_name, context)
+    
+    def post(self, request, pk=None):
+
+        if pk:
+            asset = get_object_or_404(Asset, pk=pk)
+            form = forms.AssetForm(request.POST, instance=asset)
+        else:
+            form = forms.AssetForm(request.POST)
+
+        context = {
+            'form': form
+        }
+
         if form.is_valid():
             form.save()
             return HttpResponse(status=201)
+        else:
+            return render(request, self.template_name, status=500)
 
-    def delete(self, request, pk, format=None):
+    def delete(self, request, pk):
         asset = get_object_or_404(Asset, pk=pk)
         asset.delete()
         return HttpResponse(status=204)
@@ -153,7 +166,7 @@ class OrderForm(View):
             self.template_name = 'dashboard/forms/order_form_update.html'
         else:
             order = None
-            form = forms.OrderForm
+            form = forms.OrderForm()
             formset = forms.OrderItemFormSet()
         
         context = {
