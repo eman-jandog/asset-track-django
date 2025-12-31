@@ -5,7 +5,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, CreateView, View
-from django.db.models import Q
+from django.db.models import Q, Count
 from rest_framework.views import APIView
 from rest_framework import status
 from .models import Asset, Order, OrderItem
@@ -59,6 +59,12 @@ def orders(request):
             Q(order_id__icontains=query)
         )
     
+    order_qs = order_qs.order_by('id')
+
+    total_pending = order_qs.filter(status="Pending").count()
+    total_inTransit = order_qs.filter(status="In Transit").count()
+    total_delivered = order_qs.filter(status="Delivered").count()
+
     paginator = Paginator(order_qs, 10)
 
     page = request.GET.get('page')
@@ -69,7 +75,10 @@ def orders(request):
 
     context = {
         'page_obj': order_page,
-        'query': query
+        'query': query,
+        'totalPending': total_pending,
+        'totalInTransit': total_inTransit,
+        'totalDelivered': total_delivered
     }
 
     if page is not None or query is not None:
@@ -89,7 +98,7 @@ def assets(request):
             Q(location__icontains=query) |
             Q(category__icontains=query)
         )
-
+        
     asset_qs = asset_qs.order_by('id')
 
     paginator = Paginator(asset_qs, 10)
@@ -231,7 +240,7 @@ def staff_detail(request, id):
 
 @login_required
 def order(request):
-    orders = Order.objects.select_related('asset','staff').all()
+    orders = Order.objects.select_related('staff').all()
 
     for order in orders:
         order.date_ordered = order.date_ordered.strftime('%m-%d-%Y')

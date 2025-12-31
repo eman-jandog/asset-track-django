@@ -69,7 +69,6 @@ class Order(models.Model):
     STATUS_CATEGORY = [
         ('Delivered', 'Delivered'),
         ('In Transit', 'In Transit'),
-        ('Processing', 'Processing'),
         ('Pending', 'Pending')
     ]
 
