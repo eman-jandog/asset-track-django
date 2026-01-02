@@ -20,7 +20,6 @@ class Staff(models.Model):
     location = models.CharField(max_length=200, null=True)
     phone_number = models.CharField(max_length=11, null=True)
     start_date = models.DateField(null=True)
-    location = models.CharField(max_length=200, null=True)
     notes = models.TextField(null=True)
 
     def __str__(self):
@@ -47,7 +46,7 @@ class Asset(models.Model):
     ]
 
     name = models.CharField(max_length=100)
-    employee = models.ForeignKey(Staff, on_delete=models.PROTECT, null=True)
+    employee = models.ForeignKey(Staff, on_delete=models.PROTECT, related_name="assets", null=True)
     track_id = models.CharField(max_length=100, null=True)
     category = models.CharField(max_length=50, choices=ASSET_CATEGORY, null=True)
     brand = models.CharField(max_length=50,null=True, blank=True)

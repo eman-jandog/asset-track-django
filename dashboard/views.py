@@ -8,7 +8,7 @@ from django.views.generic import TemplateView, CreateView, View
 from django.db.models import Q, Count
 from rest_framework.views import APIView
 from rest_framework import status
-from .models import Asset, Order, OrderItem
+from .models import Asset, Order, OrderItem, Staff
 from . import forms
 
 
@@ -45,7 +45,22 @@ def overview(request):
     return render(request, 'dashboard/sections/overview.html')
 
 def staff(request):
-    return render(request, 'dashboard/sections/staff.html')
+    staff_qs = Staff.objects.prefetch_related('assets').all()
+
+    paginator = Paginator(staff_qs, 10)
+
+    page = request.GET.get("page")
+
+    try:
+        staff_page = paginator.get_page(page)
+    except (EmptyPage, PageNotAnInteger):
+        staff_page = paginator.get_page(1)
+    
+    context = {
+        'staff_page': staff_page,
+    }
+
+    return render(request, 'dashboard/sections/staff.html', context)
 
 def orders(request):
     order_qs = Order.objects.prefetch_related('items').all()
