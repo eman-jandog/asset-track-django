@@ -1,3 +1,4 @@
+            {% load create_user_icon %}
             <table class="w-full">
                 <thead class="bg-gray-50">
                     <tr>
@@ -14,15 +15,15 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center">
                                 <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                                    <span class="text-blue-600 font-semibold text-sm">LB</span>
+                                    <span class="text-blue-600 font-semibold text-sm">{{ staff|createUserIcon  }}</span>
                                 </div>
                                 <div class="ml-4">
-                                    <div class="text-sm font-medium text-gray-900">Lisa Brown</div>
-                                    <div class="text-sm text-gray-500">lisa.b@company.com</div>
+                                    <div class="text-sm font-medium text-gray-900">{{ staff.first_name }} {{ staff.last_name }}</div>
+                                    <div class="text-sm text-gray-500">{{ staff.email }}</div>
                                 </div>
                             </div>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">HR</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ staff.department }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2 assets</td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Active</span>
