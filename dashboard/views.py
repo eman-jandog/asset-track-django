@@ -47,6 +47,16 @@ def overview(request):
 def staff(request):
     staff_qs = Staff.objects.prefetch_related('assets').all()
 
+    query = request.GET.get("q")
+    
+    if query:
+        staff_qs = staff_qs.filter(
+            Q(first_name__icontains=query) |
+            Q(last_name__icontains=query)
+        )
+
+    staff_qs = staff_qs.order_by('id')
+
     paginator = Paginator(staff_qs, 10)
 
     page = request.GET.get("page")
@@ -59,6 +69,9 @@ def staff(request):
     context = {
         'staff_page': staff_page,
     }
+
+    if query is not None or page is not None:
+        return render(request, 'dashboard/tables/staffs_table.html', context)
 
     return render(request, 'dashboard/sections/staff.html', context)
 

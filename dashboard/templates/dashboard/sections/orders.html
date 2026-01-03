@@ -55,7 +55,6 @@
                     id="orderSearch"
                     placeholder="Search orders..."
                     hx-target="#ordersTable"
-                    hx-swap="innerHTML"
                     hx-include="[id='orderSearch']"
                     hx-get="{% url 'orders' %}"
                     hx-trigger="keyup changed delay:300ms, search"
