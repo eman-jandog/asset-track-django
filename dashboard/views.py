@@ -246,6 +246,12 @@ class OrderForm(View):
         order.delete()
         return HttpResponse(status=204)
 
+class StaffForm(View):
+    template_name = 'dashboard/forms/staff_form.html'
+
+    def get(self, request, pk=None):
+        return render(request, self.template_name)
+
 @login_required
 def _staff(request):
     users = User.objects.all()

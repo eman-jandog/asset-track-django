@@ -80,7 +80,7 @@ function openModal(modalId) {
         target: '#formModal',
     })
     .then(() => {
-        document.getElementById('formModal').classList.remove('hidden');
+        document.getElementById('formModal').classList.toggle('hidden');
         document.body.style.overflow = 'hidden';
     })
     .catch(e => {
