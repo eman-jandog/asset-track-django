@@ -250,7 +250,12 @@ class StaffForm(View):
     template_name = 'dashboard/forms/staff_form.html'
 
     def get(self, request, pk=None):
-        return render(request, self.template_name)
+        form = forms.StaffForm()
+
+        context = {
+            'form': form
+        }
+        return render(request, self.template_name, context)
 
 @login_required
 def _staff(request):

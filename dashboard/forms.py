@@ -146,6 +146,101 @@ class AssetForm(ModelForm):
         )
         self.fields['employee'].querset = Staff.objects.all().order_by('first_name')
 
+class StaffForm(ModelForm):
+    class Meta:
+        model = Staff
+        fields = ['first_name', 'last_name', 'email', 'department', 'position', 'address', 'location', 'phone_number', 'start_date', 'notes']
+        widgets = {
+            'start_date': forms.DateInput(attrs={'type': 'date'})
+        }
+    
+    def __init__(self, *args, **kwargs):
+
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+        self.helper.layout = Layout(
+            Div(
+                Div(
+                    Field(
+                        "first_name",
+                        label_class="block text-sm font-medium text-gray-700 mb-2",
+                        css_class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all",
+                        placeholder="Enter first name"
+                    )
+                ),
+                Div(
+                    Field(
+                        "last_name",
+                        label_class="block text-sm font-medium text-gray-700 mb-2",
+                        css_class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all",
+                        placeholder="Enter last name"
+                    )
+                ),
+                css_class="grid grid-cols-1 md:grid-cols-2 gap-6"
+            ),
+            Div(
+                Field(
+                    "email",
+                    label_class="block text-sm font-medium text-gray-700 mb-2",
+                    css_class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all",
+                    placeholder="employee@assettrack.com"
+                )
+            ),
+            Div(
+                Div(
+                    Field(
+                        "department",
+                        label_class="block text-sm font-medium text-gray-700 mb-2",
+                        css_class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    )
+                ),
+                Div(
+                    Field(
+                        "position",
+                        label_class="block text-sm font-medium text-gray-700 mb-2",
+                        css_class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all",
+                        placeholder="e.g., HR Assistant"
+                    )
+                ),
+                css_class="grid grid-cols-1 md:grid-cols-2 gap-6"
+            ),
+            Div(
+                Div(
+                    Field(
+                        "phone_number",
+                        label_class="block text-sm font-medium text-gray-700 mb-2",
+                        css_class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all",
+                        placeholder="+63 912-345-6789"
+                    )
+                ),
+                Div(
+                    Field(
+                        "start_date",
+                        label_class="block text-sm font-medium text-gray-700 mb-2",
+                        css_class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    )
+                ),
+                css_class="grid grid-cols-1 md:grid-cols-2 gap-6"
+            ),
+            Div(
+                Field(
+                    "location",
+                    label_class="block text-sm font-medium text-gray-700 mb-2",
+                    css_class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all",
+                    placeholder="e.g., Building A, Floor 3"
+                )
+            ),
+            Div(
+                Field(
+                    "notes",
+                    label_class="block text-sm font-medium text-gray-700 mb-2",
+                    css_class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all",
+                    placeholder="Additional notes about the employee..."
+                )
+            ),
+        )
+
 class OrderForm(ModelForm):
     class Meta:
         model = Order
