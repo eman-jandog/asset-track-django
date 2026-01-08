@@ -149,7 +149,7 @@ class AssetForm(ModelForm):
 class StaffForm(ModelForm):
     class Meta:
         model = Staff
-        fields = ['first_name', 'last_name', 'email', 'department', 'position', 'address', 'location', 'phone_number', 'start_date', 'notes']
+        fields = ['first_name', 'last_name', 'email', 'department', 'position', 'address', 'phone_number', 'start_date', 'notes']
         widgets = {
             'start_date': forms.DateInput(attrs={'type': 'date'})
         }
@@ -225,7 +225,7 @@ class StaffForm(ModelForm):
             ),
             Div(
                 Field(
-                    "location",
+                    "address",
                     label_class="block text-sm font-medium text-gray-700 mb-2",
                     css_class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all",
                     placeholder="e.g., Building A, Floor 3"

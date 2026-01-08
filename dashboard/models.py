@@ -17,7 +17,6 @@ class Staff(models.Model):
     department = models.CharField(max_length=50, choices=DEPARTMENT_CHOICES, null=True)
     position = models.CharField(max_length=100, null=True)
     address = models.CharField(max_length=200, null=True)
-    location = models.CharField(max_length=200, null=True)
     phone_number = models.CharField(max_length=11, null=True)
     start_date = models.DateField(null=True)
     notes = models.TextField(null=True)
