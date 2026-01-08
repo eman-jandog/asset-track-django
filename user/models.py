@@ -17,6 +17,7 @@ class Profile(models.Model):
     phone_number = models.CharField(max_length=11, null=True)
     image = models.ImageField(default='avatar.png', upload_to='profile_images')
     bio = models.TextField(null=True)
+    start_date = models.DateField(null=True)
 
     def __str__(self):
         return f'{self.staff.username.capitalize()}-Profile'

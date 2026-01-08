@@ -2,7 +2,7 @@ from django import  forms
 from django.forms import ModelForm, inlineformset_factory, HiddenInput
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Field
-from .models import Asset, Order, Staff, OrderItem
+from .models import Asset, Order, OrderItem
 
 
 class AssetForm(ModelForm):
