@@ -250,12 +250,28 @@ class StaffForm(View):
     template_name = 'dashboard/forms/staff_form.html'
 
     def get(self, request, pk=None):
-        form = forms.StaffForm()
-
+        if pk:
+            staff = get_object_or_404(Staff, pk=pk)
+        else:
+            staff = None
+        form = forms.StaffForm(instance=staff)
         context = {
-            'form': form
+            'form': form,
+            'staff': staff
         }
         return render(request, self.template_name, context)
+
+    def post(self, request, pk=None):
+        if pk:
+            staff = get_object_or_404(Staff, pk)
+        else:
+            staff = None
+
+        form = forms.StaffForm(request.POST, instance=staff)
+        
+        if form.is_valid():
+            form.save()
+            return HttpResponse(status=201)
 
 @login_required
 def _staff(request):

@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 
-                <form id="addStaffForm" class="p-6 space-y-6" action="{% url 'staff-create' %}" data-form="staff">
+                <form id="addStaffForm" class="p-6 space-y-6" {% if staff %} action="{% url 'staff-action' pk=staff.pk|default:''%}" {% else %} action="{% url 'staff-create' %}" {% endif %} data-form="staff">
                     {% crispy form %}
 
                     <div class="flex justify-end space-x-4 pt-6 border-t">

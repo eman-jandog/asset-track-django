@@ -29,8 +29,8 @@
                             <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Active</span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <button class="text-blue-600 hover:text-blue-900 mr-3" onclick="editStaff(5)">Edit</button>
-                            <button class="text-red-600 hover:text-red-900" onclick="deleteStaff(5)">Delete</button>
+                            <button class="text-blue-600 hover:text-blue-900 mr-3" onclick="updateItem({{staff.id}}, 'staff')">Edit</button>
+                            <button class="text-red-600 hover:text-red-900" onclick="deleteItem({{staff.id}}, 'staff')">Delete</button>
                         </td>
                     </tr>
                     {% endfor %}
