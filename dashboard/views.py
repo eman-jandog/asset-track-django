@@ -263,7 +263,7 @@ class StaffForm(View):
 
     def post(self, request, pk=None):
         if pk:
-            staff = get_object_or_404(Staff, pk)
+            staff = get_object_or_404(Staff, pk=pk)
         else:
             staff = None
 
@@ -272,6 +272,9 @@ class StaffForm(View):
         if form.is_valid():
             form.save()
             return HttpResponse(status=201)
+        else:
+            return HttpResponse(status=400)
+            print("Invalid form!")
 
 @login_required
 def _staff(request):

@@ -183,7 +183,7 @@ function updateItem(id, section) {
     .then(() => {
         document.getElementById('formModal').classList.remove('hidden');
         document.body.style.overflow = 'hidden';
-        updateTotal();
+        if (section == "orders") updateTotal();
     })
     .catch(e => {
         console.error('Failed to get form', e)
