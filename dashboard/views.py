@@ -200,12 +200,11 @@ class OrderForm(View):
             form = forms.OrderForm(instance=order)
             formset = forms.OrderItemFormSet(instance=order)
             formset.extra = 0
-            self.template_name = 'dashboard/forms/order_form_update.html'
         else:
             order = None
             form = forms.OrderForm()
             formset = forms.OrderItemFormSet()
-        
+                
         context = {
             'form': form,
             'formset':  formset,
@@ -230,16 +229,10 @@ class OrderForm(View):
             formset.instance = self.object
             formset.save()  
 
-            if request.headers['HX-Request']:
-                return HttpResponse(status=201)  
+            return HttpResponse(status=201)  
 
         else:
-            context = {
-                'form': form,
-                'formset':  formset
-            }
-
-            return render(request, self.template_name, context, status=400)
+            return HttpResponse(status=400)
 
     def delete(self, request, pk):
         order =  get_object_or_404(Order, pk=pk)
