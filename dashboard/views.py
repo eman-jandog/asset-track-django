@@ -153,17 +153,14 @@ class AssetForm(View):
 
         if pk:
             asset = Asset.objects.get(pk=pk)
-            id = asset.id
-            self.template_name = 'dashboard/forms/asset_form_update.html'
         else:
             asset = None
-            id = None
             
         form = forms.AssetForm(instance=asset)
 
         context = {
             'form': form,
-            'id': id
+            'asset': asset 
         }
 
         return render(request, self.template_name, context)
@@ -172,9 +169,10 @@ class AssetForm(View):
 
         if pk:
             asset = get_object_or_404(Asset, pk=pk)
-            form = forms.AssetForm(request.POST, instance=asset)
         else:
-            form = forms.AssetForm(request.POST)
+            asset = None
+
+        form = forms.AssetForm(request.POST, instance=asset)
 
         context = {
             'form': form
@@ -184,7 +182,7 @@ class AssetForm(View):
             form.save()
             return HttpResponse(status=201)
         else:
-            return render(request, self.template_name, status=500)
+            return HttpResponse(status=404)
 
     def delete(self, request, pk):
         asset = get_object_or_404(Asset, pk=pk)
