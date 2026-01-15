@@ -115,7 +115,7 @@ def orders(request):
     return render(request, 'dashboard/sections/orders.html', context)
 
 def assets(request):
-    asset_qs = Asset.objects.all()
+    asset_qs = Asset.objects.prefetch_related("employee").all()
 
     query = request.GET.get('q')
     if query:
@@ -124,7 +124,10 @@ def assets(request):
             Q(name__icontains=query) |
             Q(track_id__icontains=query) |
             Q(location__icontains=query) |
-            Q(category__icontains=query)
+            Q(category__icontains=query) |
+            Q(employee__first_name__icontains=query) |
+            Q(employee__last_name__icontains=query)
+
         )
         
     asset_qs = asset_qs.order_by('id')
