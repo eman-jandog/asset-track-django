@@ -149,7 +149,7 @@ class AssetForm(ModelForm):
 class StaffForm(ModelForm):
     class Meta:
         model = Staff
-        fields = ['first_name', 'last_name', 'email', 'department', 'position', 'address', 'phone_number', 'start_date', 'notes']
+        fields = ['first_name', 'last_name', 'email', 'department', 'position', 'address', 'phone_number', 'start_date', 'notes', 'assets']
         widgets = {
             'start_date': forms.DateInput(attrs={'type': 'date'})
         }
@@ -307,7 +307,7 @@ class OrderForm(ModelForm):
             )
         )
 
-class OrderItemForm(forms.ModelForm):
+class OrderItemForm(ModelForm):
     class Meta:
         model = OrderItem
         fields = ['item', 'quantity', 'price']
@@ -356,4 +356,3 @@ OrderItemFormSet = inlineformset_factory(
     extra=1,
     can_delete=True,
 )
-
