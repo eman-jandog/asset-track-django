@@ -149,7 +149,7 @@ class AssetForm(ModelForm):
 class StaffForm(ModelForm):
     class Meta:
         model = Staff
-        fields = ['first_name', 'last_name', 'email', 'department', 'position', 'address', 'phone_number', 'start_date', 'notes', 'assets']
+        fields = ['first_name', 'last_name', 'email', 'department', 'position', 'address', 'phone_number', 'start_date', 'notes']
         widgets = {
             'start_date': forms.DateInput(attrs={'type': 'date'})
         }
