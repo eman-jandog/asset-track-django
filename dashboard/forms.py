@@ -1,5 +1,6 @@
 from django import  forms
 from django.forms import ModelForm, inlineformset_factory, HiddenInput
+from django.db.models import Q
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Field
 from .models import Asset, Order, OrderItem, Staff
@@ -144,9 +145,18 @@ class AssetForm(ModelForm):
                 )
             )
         )
-        self.fields['employee'].querset = Staff.objects.all().order_by('first_name')
+        self.fields['employee'].queryset = Staff.objects.all().order_by('first_name')
 
 class StaffForm(ModelForm):
+    assets = forms.ModelMultipleChoiceField(
+        queryset=Asset.objects.filter(
+            employee__isnull=True,
+            status="Available"
+        ),
+        required=False,
+        widgets=forms.CheckboxSelectMultiple
+    )
+
     class Meta:
         model = Staff
         fields = ['first_name', 'last_name', 'email', 'department', 'position', 'address', 'phone_number', 'start_date', 'notes']
@@ -240,6 +250,13 @@ class StaffForm(ModelForm):
                 )
             ),
         )
+        
+        if self.instance.pk:
+            self.fields["assets"].queryset = Asset.objects.filter(
+                Q(employee__isnull=True) |
+                    Q(employee=self.instance)
+            )
+            self.initial["assets"] = self.instance.assets.all()
 
 class OrderForm(ModelForm):
     class Meta:
@@ -356,3 +373,4 @@ OrderItemFormSet = inlineformset_factory(
     extra=1,
     can_delete=True,
 )
+
