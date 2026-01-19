@@ -60,7 +60,7 @@ class Asset(models.Model):
     last_update = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.track_id})" if self.track_id else self.name or f"Asset #{self.pk}"
     
 class Order(models.Model):
 

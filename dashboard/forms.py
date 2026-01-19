@@ -154,12 +154,12 @@ class StaffForm(ModelForm):
             status="Available"
         ),
         required=False,
-        widgets=forms.CheckboxSelectMultiple
+        widget=forms.CheckboxSelectMultiple
     )
 
     class Meta:
         model = Staff
-        fields = ['first_name', 'last_name', 'email', 'department', 'position', 'address', 'phone_number', 'start_date', 'notes']
+        fields = ['first_name', 'last_name', 'email', 'department', 'position', 'address', 'phone_number', 'start_date', 'notes', 'assets']
         widgets = {
             'start_date': forms.DateInput(attrs={'type': 'date'})
         }
@@ -254,7 +254,7 @@ class StaffForm(ModelForm):
         if self.instance.pk:
             self.fields["assets"].queryset = Asset.objects.filter(
                 Q(employee__isnull=True) |
-                    Q(employee=self.instance)
+                Q(employee=self.instance)
             )
             self.initial["assets"] = self.instance.assets.all()
 
