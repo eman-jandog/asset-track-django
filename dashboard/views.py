@@ -14,35 +14,21 @@ from . import forms
 
 @login_required
 def home(request):
-    # user = request.user
-    '''
-    if not user.is_staff or not user.is_superuser:
-        orders = Order.objects.select_related('product').filter(staff=user.id)
-        products = None
-    else:
-        orders = Order.objects.values('product__name', 'order_quantity')
-        products = Product.objects.values('name', 'quantity')
-        
-    if request.method == 'POST':
-        form = forms.OrderForm(request.POST)
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.staff = request.user
-            instance.save()
-            return redirect('dashboard-home')
-    else:
-        form = forms.OrderForm()
-
-    context = {
-        'orders': orders,
-        'form': form,   
-        'products': products
-    }
-    '''
     return render(request, 'dashboard/index.html')
 
 def overview(request):
     return render(request, 'dashboard/sections/overview.html')
+
+class OverviewSection(View):
+    template_name = 'dashboard/sections/overview.html'
+
+    def get(self, request):
+
+        context = {
+            
+        }
+
+        return render(request, self.template_name, context)
 
 class StaffSection(View):
     template_name = 'dashboard/sections/staff.html'
