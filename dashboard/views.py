@@ -44,39 +44,39 @@ def home(request):
 def overview(request):
     return render(request, 'dashboard/sections/overview.html')
 
-def staff(request):
-    staff_qs = Staff.objects.prefetch_related('assets').all()
+class StaffSection(View):
+    template_name = 'dashboard/sections/staff.html'
 
-    query = request.GET.get("q")
-    
-    if query:
-        staff_qs = staff_qs.filter(
-            Q(first_name__icontains=query) |
-            Q(last_name__icontains=query)
-        )
+    def get(self, request, pk=None):
+        staff_qs = Staff.objects.prefetch_related('assets').all()
 
-    staff_qs = staff_qs.order_by('id')
+        query = request.GET.get("q")
+        
+        if query:
+            staff_qs = staff_qs.filter(
+                Q(first_name__icontains=query) |
+                Q(last_name__icontains=query)
+            )
 
-    paginator = Paginator(staff_qs, 10)
+        staff_qs = staff_qs.order_by('id')
 
-    page = request.GET.get("page")
+        paginator = Paginator(staff_qs, 10)
 
-    try:
-        staff_page = paginator.get_page(page)
-    except (EmptyPage, PageNotAnInteger):
-        staff_page = paginator.get_page(1)
-    
-    context = {
-        'staff_page': staff_page,
-    }
+        page = request.GET.get("page")
 
-    if query is not None or page is not None:
-        return render(request, 'dashboard/tables/staffs_table.html', context)
+        try:
+            staff_page = paginator.get_page(page)
+        except (EmptyPage, PageNotAnInteger):
+            staff_page = paginator.get_page(1)
+        
+        context = {
+            'staff_page': staff_page,
+        }
 
-    return render(request, 'dashboard/sections/staff.html', context)
+        if query is not None or page is not None:
+            self.template_name = 'dashboard/tables/staffs_table.html'
 
-def orders(request):
-    pass
+        return render(request, self.template_name, context)
 
 class OrderSection(View):
     template_name = 'dashboard/sections/orders.html'
@@ -119,7 +119,6 @@ class OrderSection(View):
             self.template_name = 'dashboard/tables/orders_table.html'
         
         return render(request, self.template_name, context)
-
 
 class AssetSection(View):
     template_name = 'dashboard/sections/assets.html'
