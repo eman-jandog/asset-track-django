@@ -76,78 +76,84 @@ def staff(request):
     return render(request, 'dashboard/sections/staff.html', context)
 
 def orders(request):
-    order_qs = Order.objects.prefetch_related('items').all()
+    pass
 
-    query = request.GET.get('q')
+class OrderSection(View):
+    template_name = 'dashboard/sections/orders.html'
 
-    if query:
-        order_qs = order_qs.filter(
-            Q(items__item__icontains=query) |
-            Q(supplier__icontains=query) |
-            Q(track_id__icontains=query)
-        )
-    
-    order_qs = order_qs.order_by('id')
+    def get(self, request):
+        order_qs = Order.objects.prefetch_related('items').all()
 
-    total_pending = order_qs.filter(status="Pending").count()
-    total_inTransit = order_qs.filter(status="In Transit").count()
-    total_delivered = order_qs.filter(status="Delivered").count()
+        query = request.GET.get('q')
 
-    paginator = Paginator(order_qs, 10)
-
-    page = request.GET.get('page')
-    try:
-        order_page = paginator.get_page(page)
-    except (EmptyPage, PageNotAnInteger):
-        order_page = paginator.get_page(1)
-
-    context = {
-        'page_obj': order_page,
-        'query': query,
-        'totalPending': total_pending,
-        'totalInTransit': total_inTransit,
-        'totalDelivered': total_delivered
-    }
-
-    if page is not None or query is not None:
-        return render(request, 'dashboard/tables/orders_table.html', context)
-    
-    return render(request, 'dashboard/sections/orders.html', context)
-
-def assets(request):
-    asset_qs = Asset.objects.prefetch_related("employee").all()
-
-    query = request.GET.get('q')
-    if query:
-        query = query.strip()
-        asset_qs = asset_qs.filter(
-            Q(name__icontains=query) |
-            Q(track_id__icontains=query) |
-            Q(location__icontains=query) |
-            Q(category__icontains=query) |
-            Q(employee__first_name__icontains=query) |
-            Q(employee__last_name__icontains=query)
-
-        )
+        if query:
+            order_qs = order_qs.filter(
+                Q(items__item__icontains=query) |
+                Q(supplier__icontains=query) |
+                Q(track_id__icontains=query)
+            )
         
-    asset_qs = asset_qs.order_by('id')
+        order_qs = order_qs.order_by('id')
 
-    paginator = Paginator(asset_qs, 10)
-    page = request.GET.get('page')
-    try:
-        asset_page = paginator.get_page(page)
-    except (EmptyPage, PageNotAnInteger):
-        asset_page = paginator.get_page(1)
+        total_pending = order_qs.filter(status="Pending").count()
+        total_inTransit = order_qs.filter(status="In Transit").count()
+        total_delivered = order_qs.filter(status="Delivered").count()
 
-    context = {
-        'page_obj': asset_page,
-        'query': query
-    }
+        paginator = Paginator(order_qs, 10)
 
-    if query is not None or page is not None:
-        return render(request, 'dashboard/tables/assets_table.html', context)
+        page = request.GET.get('page')
+        try:
+            order_page = paginator.get_page(page)
+        except (EmptyPage, PageNotAnInteger):
+            order_page = paginator.get_page(1)
 
-    return render(request, 'dashboard/sections/assets.html', context)
+        context = {
+            'page_obj': order_page,
+            'query': query,
+            'totalPending': total_pending,
+            'totalInTransit': total_inTransit,
+            'totalDelivered': total_delivered
+        }
+
+        if page is not None or query is not None:
+            self.template_name = 'dashboard/tables/orders_table.html'
+        
+        return render(request, self.template_name, context)
+
+
+class AssetSection(View):
+    template_name = 'dashboard/sections/assets.html'
+
+    def get(self, request):
+        asset_qs = Asset.objects.prefetch_related("employee").all()
+        query = request.GET.get('q')
+        if query:
+            query = query.strip()
+            asset_qs = asset_qs.filter(
+                Q(name__icontains=query) |
+                Q(track_id__icontains=query) |
+                Q(location__icontains=query) |
+                Q(category__icontains=query) |
+                Q(employee__first_name__icontains=query) |
+                Q(employee__last_name__icontains=query)
+            )
+        asset_qs = asset_qs.order_by('id')
+        paginator = Paginator(asset_qs, 10)
+        page = request.GET.get('page')
+        try:
+            asset_page = paginator.get_page(page)
+        except (EmptyPage, PageNotAnInteger):
+            asset_page = paginator.get_page(1)
+
+        context = {
+            'page_obj': asset_page,
+            'query': query
+        }
+
+        if query is not None or page is not None:
+            self.template_name = 'dashboard/tables/assets_table.html'
+
+        return render(request, self.template_name, context)
 
 class AssetForm(View):
     template_name = 'dashboard/forms/asset_form.html'

@@ -10,7 +10,7 @@ urlpatterns = [
     path('orders/', views.orders, name='orders'),
     path('orders/create/', views.OrderForm.as_view(), name='orders-create'),
     path('orders/<int:pk>/', views.OrderForm.as_view(), name='orders-action'),
-    path('assets/', views.assets, name='dashboard-assets'),
+    path('assets/', views.AssetSection.as_view(), name='dashboard-assets'),
     path('assets/create/', views.AssetForm.as_view(), name='assets-create'),
     path('assets/<int:pk>/', views.AssetForm.as_view(), name='assets-action'),
 
