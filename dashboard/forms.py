@@ -148,24 +148,15 @@ class AssetForm(ModelForm):
         self.fields['employee'].queryset = Staff.objects.all().order_by('first_name')
 
 class StaffForm(ModelForm):
-    assets = forms.ModelMultipleChoiceField(
-        queryset=Asset.objects.filter(
-            employee__isnull=True,
-            status="Available"
-        ),
-        required=False,
-        widget=forms.CheckboxSelectMultiple
-    )
 
     class Meta:
         model = Staff
-        fields = ['first_name', 'last_name', 'email', 'department', 'position', 'address', 'phone_number', 'start_date', 'notes', 'assets']
+        fields = ['first_name', 'last_name', 'email', 'department', 'position', 'address', 'phone_number', 'start_date', 'notes']
         widgets = {
             'start_date': forms.DateInput(attrs={'type': 'date'})
         }
     
     def __init__(self, *args, **kwargs):
-
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_tag = False
@@ -250,13 +241,6 @@ class StaffForm(ModelForm):
                 )
             ),
         )
-        
-        if self.instance.pk:
-            self.fields["assets"].queryset = Asset.objects.filter(
-                Q(employee__isnull=True) |
-                Q(employee=self.instance)
-            )
-            self.initial["assets"] = self.instance.assets.all()
 
 class OrderForm(ModelForm):
     class Meta:
