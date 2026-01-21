@@ -1,3 +1,4 @@
+from datetime import date
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -16,16 +17,23 @@ from . import forms
 def home(request):
     return render(request, 'dashboard/index.html')
 
-def overview(request):
-    return render(request, 'dashboard/sections/overview.html')
-
 class OverviewSection(View):
     template_name = 'dashboard/sections/overview.html'
 
     def get(self, request):
 
+        today = date.today()
+        last_month = (today.month - 1) % 12
+
+        overall_assets = Asset.objects.all()
+        total_assets = overall_assets.count()
+        last_month_assets = overall_assets.filter(
+            date_purchase__month=12
+        )
+
         context = {
-            
+            "total_assets": total_assets,
+            "last_month_assets": last_month_assets
         }
 
         return render(request, self.template_name, context)
