@@ -23,17 +23,25 @@ class OverviewSection(View):
     def get(self, request):
 
         today = date.today()
-        last_month = (today.month - 1) % 12
 
         overall_assets = Asset.objects.all()
-        total_assets = overall_assets.count()
-        last_month_assets = overall_assets.filter(
-            date_purchase__month=12
-        )
+        total_assets = overall_assets.count() 
+        current_month_assets = overall_assets.filter(
+            date_purchase__month=today.month
+        ).count()
+
+        last_month_total_assets = total_assets - current_month_assets
+        if last_month_total_assets != 0:
+            calc_percentage = (current_month_assets / last_month_total_assets ) * 100
+            percentage_increase = round(calc_percentage, 2)
+        else:
+            percentage_increase = 0
 
         context = {
-            "total_assets": total_assets,
-            "last_month_assets": last_month_assets
+            "assets": {
+                "total": total_assets,
+                "percentage": percentage_increase
+            }
         }
 
         return render(request, self.template_name, context)

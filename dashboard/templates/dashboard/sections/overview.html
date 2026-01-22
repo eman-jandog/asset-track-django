@@ -5,8 +5,8 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm font-medium text-gray-600">Total Assets</p>
-                    <p class="text-3xl font-bold text-gray-900 mt-2">1,247</p>
-                    <p class="text-sm text-green-600 mt-1">↗ 12% from last month</p>
+                    <p class="text-3xl font-bold text-gray-900 mt-2">{{ assets.total }}</p>
+                    <p class="text-sm {% if assets.percentage < 0 %} text-red-600 {% else %} text-green-600 {% endif %}mt-1">{% if assets.percentage < 0 %}↙{% else %}↗{% endif %} {{ assets.percentage }}% from last month</p>
                 </div>
                 <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -127,13 +127,3 @@
             </div>
         </div>
     </div>
-
-    <br>
-    <h5>Total assets: {{ total_assets }}</h5>
-    <ul>
-    {% for asset in last_month_assets %}
-    <li>
-        {{ asset }} - {{ asset.date_purchase }}
-    </li>
-    {% endfor %}
-    </ul>
