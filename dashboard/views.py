@@ -22,24 +22,21 @@ class OverviewSection(View):
     today = date.today()
 
     def calculate_assets(self):
-        month = self.today.month
-        overall_assets = Asset.objects.all()
+        assets = Asset.objects.aggregate(
+            total=Count("name"),
+            current_month=Count("name", filter=Q(date_purchase__month=self.today.month))
+        )
 
-        total_assets = overall_assets.count() 
-        current_month_assets = overall_assets.filter(
-            date_purchase__month=month
-        ).count()
-
-        last_month_total_assets = total_assets - current_month_assets
-        if last_month_total_assets != 0:
-            calc_percentage = (current_month_assets / last_month_total_assets ) * 100
-            latest_percentage = round(calc_percentage, 2)
+        last_month_total = assets["total"] - assets["current_month"]
+        if last_month_total != 0:
+            calc_percentage = (assets["current_month"] / last_month_total) * 100
+            percentage_increase = round(calc_percentage, 2)
         else:
             percentage_increase = 0
 
         return {
-            "total": total_assets,
-            "percentage": latest_percentage
+            "total": assets["total"],
+            "percentage": percentage_increase
         }
     
     def get_orders_status(self):
