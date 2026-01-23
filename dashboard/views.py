@@ -19,29 +19,44 @@ def home(request):
 
 class OverviewSection(View):
     template_name = 'dashboard/sections/overview.html'
+    today = date.today()
 
-    def get(self, request):
-
-        today = date.today()
-
+    def calculate_assets(self):
+        month = self.today.month
         overall_assets = Asset.objects.all()
+
         total_assets = overall_assets.count() 
         current_month_assets = overall_assets.filter(
-            date_purchase__month=today.month
+            date_purchase__month=month
         ).count()
 
         last_month_total_assets = total_assets - current_month_assets
         if last_month_total_assets != 0:
             calc_percentage = (current_month_assets / last_month_total_assets ) * 100
-            percentage_increase = round(calc_percentage, 2)
+            latest_percentage = round(calc_percentage, 2)
         else:
             percentage_increase = 0
 
+        return {
+            "total": total_assets,
+            "percentage": latest_percentage
+        }
+    
+    def get_orders_status(self):
+        return Order.objects.aggregate(
+            active=Count("track_id", filter=Q(status="In Transit")), 
+            pending=Count("track_id", filter=Q(status="Pending"))
+,           today=Count("track_id", filter=Q(date_ordered__date=self.today))
+        )
+
+    def get(self, request):
+
+        assets_data = self.calculate_assets()
+        orders_data = self.get_orders_status()
+
         context = {
-            "assets": {
-                "total": total_assets,
-                "percentage": percentage_increase
-            }
+            "assets": assets_data,
+            "orders": orders_data
         }
 
         return render(request, self.template_name, context)
