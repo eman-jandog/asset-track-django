@@ -42,9 +42,17 @@ class OverviewSection(View):
     def get_orders_status(self):
         return Order.objects.aggregate(
             active=Count("track_id", filter=Q(status="In Transit")), 
-            pending=Count("track_id", filter=Q(status="Pending"))
-,           today=Count("track_id", filter=Q(date_ordered__date=self.today))
+            pending=Count("track_id", filter=Q(status="Pending")),
+            today=Count("track_id", filter=Q(date_ordered__date=self.today))
         )
+
+    def get_staffs_count(self):
+        staff = Staff.object.aggregate(
+            total=Count("id"),
+            total_new_hires=Count("id",filter=Q(start_date__month=self.today.month))
+        )
+
+        
 
     def get(self, request):
 
