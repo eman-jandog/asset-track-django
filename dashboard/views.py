@@ -47,21 +47,21 @@ class OverviewSection(View):
         )
 
     def get_staffs_count(self):
-        staff = Staff.object.aggregate(
+        return Staff.objects.aggregate(
             total=Count("id"),
             total_new_hires=Count("id",filter=Q(start_date__month=self.today.month))
         )
-
-        
 
     def get(self, request):
 
         assets_data = self.calculate_assets()
         orders_data = self.get_orders_status()
+        staffs_data = self.get_staffs_count()
 
         context = {
             "assets": assets_data,
-            "orders": orders_data
+            "orders": orders_data,
+            "staffs": staffs_data
         }
 
         return render(request, self.template_name, context)
