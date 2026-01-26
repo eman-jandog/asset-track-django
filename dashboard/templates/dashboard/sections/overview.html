@@ -6,7 +6,7 @@
                 <div>
                     <p class="text-sm font-medium text-gray-600">Total Assets</p>
                     <p class="text-3xl font-bold text-gray-900 mt-2">{{ assets.total }}</p>
-                    <p class="text-sm {% if assets.percentage < 0 %} text-orange-600 {% else %} text-green-600 {% endif %}mt-1">{% if assets.percentage < 0 %}↙{% else %}↗{% endif %} {{ assets.percentage }}% from last month</p>
+                    <p class="text-sm {% if assets.percentage < 0 %} text-orange-600 {% else %} text-green-600 {% endif %}mt-1">{% if assets.percentage < 0 %}↙{% else %}↗{% endif %} {{ assets.percentage }}% this month</p>
                 </div>
                 <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -36,7 +36,7 @@
                 <div>
                     <p class="text-sm font-medium text-gray-600">Staff Members</p>
                     <p class="text-3xl font-bold text-gray-900 mt-2">{{ staffs.total }}</p>
-                    <p class="text-sm text-green-600 mt-1">↗ {{ staffs.total_new_hires }} new hires</p>
+                    <p class="text-sm text-green-600 mt-1">{% if staffs.total_new_hires > 1 %} ~ {{ staffs.total_new_hires }} new hires {% else %}↗ {{ staffs.total_new_hires }} new hire  {% endif %}</p>
                 </div>
                 <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
                     <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -50,8 +50,8 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm font-medium text-gray-600">Total Value</p>
-                    <p class="text-3xl font-bold text-gray-900 mt-2">$2.4M</p>
-                    <p class="text-sm text-purple-600 mt-1">↗ $180K this quarter</p>
+                    <p class="text-3xl font-bold text-gray-900 mt-2">₱{{ assets.value_total }}</p>
+                    <p class="text-sm text-purple-600 mt-1">↗ ₱{{ assets.current_quarter_value }} this quarter</p>
                 </div>
                 <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
                     <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

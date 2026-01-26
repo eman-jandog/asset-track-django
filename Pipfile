@@ -15,6 +15,7 @@ google-api-python-client = "*"
 python-decouple = "*"
 crispy-tailwind = "*"
 djangorestframework = "*"
+numerize = "*"
 
 [dev-packages]
 

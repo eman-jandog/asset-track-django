@@ -6,7 +6,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, CreateView, View
-from django.db.models import Q, Count
+from django.db.models import Q, Count, Sum
+from numerize import numerize
 from rest_framework.views import APIView
 from rest_framework import status
 from .models import Asset, Order, OrderItem, Staff
@@ -21,10 +22,10 @@ class OverviewSection(View):
     template_name = 'dashboard/sections/overview.html'
     today = date.today()
 
-    def calculate_assets(self):
+    def get_assets_count(self):
         assets = Asset.objects.aggregate(
             total=Count("name"),
-            current_month=Count("name", filter=Q(date_purchase__month=self.today.month))
+            current_month=Count("name", filter=Q(date_purchase__month=self.today.month)),
         )
 
         last_month_total = assets["total"] - assets["current_month"]
@@ -38,8 +39,8 @@ class OverviewSection(View):
             "total": assets["total"],
             "percentage": percentage_increase
         }
-    
-    def get_orders_status(self):
+
+    def get_orders_count(self):
         return Order.objects.aggregate(
             active=Count("track_id", filter=Q(status="In Transit")), 
             pending=Count("track_id", filter=Q(status="Pending")),
@@ -52,14 +53,29 @@ class OverviewSection(View):
             total_new_hires=Count("id",filter=Q(start_date__month=self.today.month))
         )
 
+    def get_assets_value(self):
+        month = self.today.month
+        quarter = ((month-1) // 3) + 1
+
+        assets = Asset.objects.aggregate(
+            total_value=Sum("price"),
+            current_quarter_value=Sum("price", filter=Q(date_purchase__quarter=quarter)) 
+        )
+
+        return {
+            "value_total": numerize.numerize(assets["total_value"]),
+            "current_quarter_value": numerize.numerize(assets["current_quarter_value"])
+        }
+
     def get(self, request):
 
-        assets_data = self.calculate_assets()
-        orders_data = self.get_orders_status()
+        assets_data = self.get_assets_count()
+        orders_data = self.get_orders_count()
         staffs_data = self.get_staffs_count()
+        assets_value_data = self.get_assets_value()
 
         context = {
-            "assets": assets_data,
+            "assets": assets_data | assets_value_data,
             "orders": orders_data,
             "staffs": staffs_data
         }
