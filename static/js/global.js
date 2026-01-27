@@ -267,9 +267,59 @@ function handleAssetSubmission(event) {
     closeModal('addAssetModal');
 }
 
+// Order item functions
+function updateManagementForm(totalForms) {
+    const forms = document.querySelectorAll('.order-item');
+    totalForms.value = forms.length;
+
+    forms.forEach((form, index) => {
+        form.querySelectorAll('div, label, input').forEach(input => {
+            switch(input.tagName) {
+                case 'DIV':
+                    input.id = input.id.replace(/-\d+-/g, `-${index}-`);
+                    break;
+                case 'LABEL':
+                    let value = input.getAttribute('for');
+                    input.setAttribute('for', value.replace(/-\d+-/g, `-${index}-`));
+                    break;
+                case 'INPUT':
+                    input.name = input.name.replace(/-\d+-/g, `-${index}-`);
+                    input.id = input.id.replace(/-\d+-/g, `-${index}-`);
+                    break;
+            }   
+        })
+    })
+}
+
+function updateTotal() {
+    let total = 0;
+    document.querySelectorAll('.order-item').forEach(row => {
+        const qty = parseFloat(row.querySelector('[name$="-quantity"]').value) || 0;
+        const price = parseFloat(row.querySelector('[name$="-price"]').value) || 0;
+        total += (qty * price);
+    })
+    document.getElementById('orderTotal').textContent = `₱${total.toFixed(2)}`
+}
+
+// Document Functions
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith(name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length+1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 // Initializing
 function initializeCharts() {
-    // Asset Distribution Chart
+    // Asset Distribution Chart 
     const assetCtx = document.getElementById('assetChart').getContext('2d');
     new Chart(assetCtx, {
         type: 'doughnut',
@@ -344,86 +394,16 @@ function initializeCharts() {
 }
 
 function initializeDashboard() {
-    // populateStaffTable();
-    // populateOrdersTable();
-    // populateAssetsGrid();
-    // loadUserProfile();
     
     // Initialize charts after a short delay to ensure DOM is ready
     setTimeout(initializeCharts, 100);
 }
-
-// Document Functions
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.startsWith(name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length+1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-
-// Order item functions
-function updateManagementForm(totalForms) {
-    const forms = document.querySelectorAll('.order-item');
-    totalForms.value = forms.length;
-
-    forms.forEach((form, index) => {
-        form.querySelectorAll('div, label, input').forEach(input => {
-            switch(input.tagName) {
-                case 'DIV':
-                    input.id = input.id.replace(/-\d+-/g, `-${index}-`);
-                    break;
-                case 'LABEL':
-                    let value = input.getAttribute('for');
-                    input.setAttribute('for', value.replace(/-\d+-/g, `-${index}-`));
-                    break;
-                case 'INPUT':
-                    input.name = input.name.replace(/-\d+-/g, `-${index}-`);
-                    input.id = input.id.replace(/-\d+-/g, `-${index}-`);
-                    break;
-            }   
-        })
-    })
-}
-
-function updateTotal() {
-    let total = 0;
-    document.querySelectorAll('.order-item').forEach(row => {
-        const qty = parseFloat(row.querySelector('[name$="-quantity"]').value) || 0;
-        const price = parseFloat(row.querySelector('[name$="-price"]').value) || 0;
-        total += (qty * price);
-    })
-    document.getElementById('orderTotal').textContent = `₱${total.toFixed(2)}`
-}
-
 
 document.addEventListener('DOMContentLoaded', () => {
     // Sidebar actions
     document.getElementById('logoutBtn').addEventListener('click', handleLogout);
     document.getElementById('profileBtn').addEventListener('click', toggleUserMenu);
     document.getElementById('sidebarToggle').addEventListener('click', toggleSidebarMode);
-
-    // Modal close buttons
-    // document.getElementById('closeStaffModal').addEventListener('click', () => closeModal('addStaffModal'));
-    // document.getElementById('cancelStaffModal').addEventListener('click', () => closeModal('addStaffModal'));
-
-    // document.getElementById('closeOrderModal').addEventListener('click', () => closeModal('createOrderModal'));
-    // document.getElementById('cancelOrderModal').addEventListener('click', () => closeModal('createOrderModal'));
-
-    // Form submissions
-    // document.getElementById('addStaffForm').addEventListener('submit', handleStaffSubmission);
-    // document.getElementById('createOrderForm').addEventListener('submit', handleOrderSubmission);
-    // document.getElementById('addAssetForm').addEventListener('submit', handleAssetSubmission);
-
-    // Order item management
-    // document.getElementById('addOrderItem').addEventListener('click', addOrderItem)
 
     // Sidebar buttons navigation
     document.querySelectorAll('.nav-item').forEach(item => {

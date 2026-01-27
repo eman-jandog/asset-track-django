@@ -7,6 +7,7 @@ from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, CreateView, View
 from django.db.models import Q, Count, Sum
+from django.db.models.functions import Coalesce
 from numerize import numerize
 from rest_framework.views import APIView
 from rest_framework import status
@@ -67,12 +68,19 @@ class OverviewSection(View):
             "current_quarter_value": numerize.numerize(assets["current_quarter_value"])
         }
 
+    def get_charts_data(self):
+        categories = Asset.get_assets_categories(Asset)
+        assets = Asset.objects.all()
+        data = []
+        
+
     def get(self, request):
 
         assets_data = self.get_assets_count()
         orders_data = self.get_orders_count()
         staffs_data = self.get_staffs_count()
         assets_value_data = self.get_assets_value()
+        charts_data = self.get_charts_data()
 
         context = {
             "assets": assets_data | assets_value_data,
