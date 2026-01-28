@@ -69,10 +69,25 @@ class OverviewSection(View):
         }
 
     def get_charts_data(self):
-        categories = Asset.get_assets_categories(Asset)
-        assets = Asset.objects.all()
-        data = []
-        
+        categories = Asset.ASSET_CATEGORY
+        categories_detail = [ category[1] for category in categories ]
+        count_by_category = Asset.objects.values("category").annotate(total=Count("category"))
+        category_data = [ item for item in count_by_category ]
+
+        category_values = []
+        for category in categories:
+            category_abbr = category[0]
+            found = False
+            for data in category_data:
+                if data["category"] == category_abbr:
+                    category_values.append(data["total"])
+                    found = True
+
+            if not found:
+                category_values.append(0)
+
+        return [categories_detail, category_values]
+
 
     def get(self, request):
 

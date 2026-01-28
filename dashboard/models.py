@@ -62,7 +62,9 @@ class Asset(models.Model):
     def __str__(self):
         return f"{self.name} ({self.track_id})" if self.track_id else self.name or f"Asset #{self.pk}"
     
-    def get_assets_categories(self):
+    def get_assets_categories(self, abbr=False):
+        if abbr:
+            return [category[0] for category in self.ASSET_CATEGORY]
         return [category[1] for category in self.ASSET_CATEGORY]
 
 class Order(models.Model):
