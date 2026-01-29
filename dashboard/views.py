@@ -95,12 +95,15 @@ class OverviewSection(View):
         orders_data = self.get_orders_count()
         staffs_data = self.get_staffs_count()
         assets_value_data = self.get_assets_value()
-        charts_data = self.get_charts_data()
+        [categories_detail, category_values] = self.get_charts_data()
 
         context = {
             "assets": assets_data | assets_value_data,
             "orders": orders_data,
-            "staffs": staffs_data
+            "staffs": staffs_data,
+            "categories_detail": categories_detail,
+            "categories_values": categories_values
+            
         }
 
         return render(request, self.template_name, context)
@@ -335,6 +338,11 @@ class StaffForm(View):
         else:
             return HttpResponse(status=400)
             print("Invalid form!")
+
+class GetChartsData(View):
+    
+    def get(self, request):
+        pass
 
 @login_required
 def _staff(request):

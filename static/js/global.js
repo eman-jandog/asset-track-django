@@ -320,6 +320,7 @@ function getCookie(name) {
 // Initializing
 function initializeCharts() {
     // Asset Distribution Chart 
+    
     const assetCtx = document.getElementById('assetChart').getContext('2d');
     new Chart(assetCtx, {
         type: 'doughnut',
