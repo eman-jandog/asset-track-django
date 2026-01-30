@@ -68,25 +68,6 @@ class OverviewSection(View):
             "current_quarter_value": numerize.numerize(assets["current_quarter_value"])
         }
 
-    def get_charts_data(self):
-        categories = Asset.ASSET_CATEGORY
-        categories_detail = [ category[1] for category in categories ]
-        count_by_category = Asset.objects.values("category").annotate(total=Count("category"))
-        category_data = [ item for item in count_by_category ]
-
-        category_values = []
-        for category in categories:
-            category_abbr = category[0]
-            found = False
-            for data in category_data:
-                if data["category"] == category_abbr:
-                    category_values.append(data["total"])
-                    found = True
-
-            if not found:
-                category_values.append(0)
-
-        return [categories_detail, category_values]
 
 
     def get(self, request):
@@ -95,15 +76,12 @@ class OverviewSection(View):
         orders_data = self.get_orders_count()
         staffs_data = self.get_staffs_count()
         assets_value_data = self.get_assets_value()
-        [categories_detail, category_values] = self.get_charts_data()
-
+        
         context = {
             "assets": assets_data | assets_value_data,
             "orders": orders_data,
-            "staffs": staffs_data,
-            "categories_detail": categories_detail,
-            "categories_values": categories_values
-            
+            "staffs": staffs_data
+
         }
 
         return render(request, self.template_name, context)
@@ -342,7 +320,24 @@ class StaffForm(View):
 class GetChartsData(View):
     
     def get(self, request):
-        pass
+        categories = Asset.ASSET_CATEGORY
+        categories_detail = [ category[1] for category in categories ]
+        count_by_category = Asset.objects.values("category").annotate(total=Count("category"))
+        category_data = [ item for item in count_by_category ]
+
+        category_values = []
+        for category in categories:
+            category_abbr = category[0]
+            found = False
+            for data in category_data:
+                if data["category"] == category_abbr:
+                    category_values.append(data["total"])
+                    found = True
+
+            if not found:
+                category_values.append(0)
+
+        return [categories_detail, category_values]
 
 @login_required
 def _staff(request):
