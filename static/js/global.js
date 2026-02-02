@@ -317,6 +317,13 @@ function getCookie(name) {
     return cookieValue;
 }
 
+function getCSRFToken() {
+    return document.cookie
+        .split("; ")
+        .find(row => row.startsWith("csrftoken="))
+        .split("=")[1];
+} 
+
 async function fetchJson(url, options={}) {
     const res = await fetch(url,options);
     if (!res.ok) throw new Error(res.status);
@@ -444,7 +451,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(form)
             
             const url = form.getAttribute('action');
-            const csrfToken = getCookie('csrftoken');
+            const csrfToken = getCSRFToken();
             const formType = form.dataset.form
 
             let prefix;
