@@ -68,8 +68,6 @@ class OverviewSection(View):
             "current_quarter_value": numerize.numerize(assets["current_quarter_value"])
         }
 
-
-
     def get(self, request):
 
         assets_data = self.get_assets_count()
@@ -321,23 +319,14 @@ class GetChartsData(View):
     
     def get(self, request):
         categories = Asset.ASSET_CATEGORY
-        categories_detail = [ category[1] for category in categories ]
-        count_by_category = Asset.objects.values("category").annotate(total=Count("category"))
-        category_data = [ item for item in count_by_category ]
-
-        category_values = []
-        for category in categories:
-            category_abbr = category[0]
-            found = False
-            for data in category_data:
-                if data["category"] == category_abbr:
-                    category_values.append(data["total"])
-                    found = True
-
-            if not found:
-                category_values.append(0)
-
-        return [categories_detail, category_values]
+        count_qs = Asset.objects.values("category").annotate(total=Count("id"))
+        count_map = { row["category"]:  row["total"] for row in count_qs}
+        labels = [ label for _, label in categories ]
+        values = [ count_map.get(key, 0) for key, _ in categories ]
+        return JsonResponse({
+            "labels": labels,
+            "values": values
+        })
 
 @login_required
 def _staff(request):

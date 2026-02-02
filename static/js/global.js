@@ -317,17 +317,24 @@ function getCookie(name) {
     return cookieValue;
 }
 
+async function fetchJson(url, options={}) {
+    const res = await fetch(url,options);
+    if (!res.ok) throw new Error(res.status);
+    return res.json();
+}
+
 // Initializing
-function initializeCharts() {
+async function initializeCharts() {
+    const {labels, values} = await fetchJson("overview/charts/");
+
     // Asset Distribution Chart 
-    
     const assetCtx = document.getElementById('assetChart').getContext('2d');
     new Chart(assetCtx, {
         type: 'doughnut',
         data: {
-            labels: ['Laptops', 'Monitors', 'Mobile Devices', 'Printers', 'Accessories'],
+            labels: labels,
             datasets: [{
-                data: [35, 25, 20, 12, 8],
+                data: values,
                 backgroundColor: [
                     '#3B82F6',
                     '#10B981',
