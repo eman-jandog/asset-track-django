@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -7,7 +7,7 @@ from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, CreateView, View
 from django.db.models import Q, Count, Sum
-from django.db.models.functions import Coalesce
+from django.db.models.functions import Coalesce, ExtractMonth
 from numerize import numerize
 from rest_framework.views import APIView
 from rest_framework import status
@@ -317,15 +317,27 @@ class StaffForm(View):
 
 class GetChartsData(View):
     
-    def get(self, request):
+    def get_asset_distribution(self):
         categories = Asset.ASSET_CATEGORY
         count_qs = Asset.objects.values("category").annotate(total=Count("id"))
         count_map = { row["category"]:  row["total"] for row in count_qs}
         labels = [ label for _, label in categories ]
         values = [ count_map.get(key, 0) for key, _ in categories ]
+        return {"labels": labels,"values": values}
+
+    def get_monthly_orders(self):
+        order_qs = Order.objects.annotate(month=ExtractMonth("date_ordered")).values("month").annotate(total=Count("month"))
+        order_map = { row["month"]: row["total"] for row in order_qs }
+        labels = [ datetime(2000, m, 1).strftime('%b') for m in range(1,13) ]
+        values = [ order_map.get(m, 0) for m in range(1,13)]
+        return {"labels": labels, "values": values}
+
+    def get(self, request):
+        pie = self.get_asset_distribution()
+        line = self.get_monthly_orders()
         return JsonResponse({
-            "labels": labels,
-            "values": values
+            "pie": pie,
+            "line": line
         })
 
 @login_required

@@ -332,16 +332,16 @@ async function fetchJson(url, options={}) {
 
 // Initializing
 async function initializeCharts() {
-    const {labels, values} = await fetchJson("overview/charts/");
-
+    const {pie, line} = await fetchJson("overview/charts/");
+    
     // Asset Distribution Chart 
     const assetCtx = document.getElementById('assetChart').getContext('2d');
     new Chart(assetCtx, {
         type: 'doughnut',
         data: {
-            labels: labels,
+            labels: pie.labels,
             datasets: [{
-                data: values,
+                data: pie.values,
                 backgroundColor: [
                     '#3B82F6',
                     '#10B981',
@@ -372,10 +372,10 @@ async function initializeCharts() {
     new Chart(ordersCtx, {
         type: 'line',
         data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            labels: line.labels,
             datasets: [{
                 label: 'Orders',
-                data: [12, 19, 15, 25, 22, 30],
+                data: line.values,
                 borderColor: '#3B82F6',
                 backgroundColor: 'rgba(59, 130, 246, 0.1)',
                 borderWidth: 3,
