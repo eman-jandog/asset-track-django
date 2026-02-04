@@ -329,7 +329,7 @@ class GetChartsData(View):
         order_qs = Order.objects.annotate(month=ExtractMonth("date_ordered")).values("month").annotate(total=Count("month"))
         order_map = { row["month"]: row["total"] for row in order_qs }
         labels = [ datetime(2000, m, 1).strftime('%b') for m in range(1,13) ]
-        values = [ order_map.get(m, 0) for m in range(1,13)]
+        values = [ order_map.get(m,0) for m in range(1,13)]
         return {"labels": labels, "values": values}
 
     def get(self, request):
