@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'dashboard',
     'user',
+    'activity',
     'crispy_forms',
     "crispy_bootstrap5",
     "crispy_tailwind",
