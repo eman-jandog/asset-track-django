@@ -39,7 +39,7 @@ class Activity(models.Model):
         on_delete=models.SET_NULL
     )
 
-    create_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ["-created_at"]
