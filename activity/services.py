@@ -1,18 +1,19 @@
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-
-from activity.services import log_activity
-from .models import Asset
+from .models import Activity
 
 
-@receiver(post_save, sender=Asset)
-def asset_created(sender, instance, created, **kwargs):
-    if not created:
-        return
-
-    log_activity(
-        type="asset",
-        action="created",
-        message=f"New asset added: {instance.name}",
-        obj=instance
+def log_activity(
+    *,
+    type: str,
+    action: str,
+    message: str,
+    user=None,
+    obj=None
+):
+    Activity.objects.create(
+        type=type,
+        action=action,
+        message=message,
+        user=user,
+        related_object_id=getattr(obj, "id", None),
+        related_object_type=obj.__class__.__name__ if obj else None,
     )
