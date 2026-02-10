@@ -1,9 +1,9 @@
 from .models import Activity
 
-
 def log_activity(
     *,
     type: str,
+    msg: str,
     action: str,
     message: str,
     user=None,
@@ -12,8 +12,8 @@ def log_activity(
     Activity.objects.create(
         type=type,
         action=action,
-        message=message,
+        message=msg,
         user=user,
         related_object_id=getattr(obj, "id", None),
-        related_object_type=obj.__class__.__name__ if obj else None,
+        related_object_type=obj.__class__.__name__ if obj else None
     )
