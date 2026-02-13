@@ -11,6 +11,7 @@ from django.db.models.functions import Coalesce, ExtractMonth
 from numerize import numerize
 from rest_framework.views import APIView
 from rest_framework import status
+from activity.selectors import get_recent_activities
 from .models import Asset, Order, OrderItem, Staff
 from . import forms
 
@@ -69,7 +70,6 @@ class OverviewSection(View):
         }
 
     def get(self, request):
-
         assets_data = self.get_assets_count()
         orders_data = self.get_orders_count()
         staffs_data = self.get_staffs_count()
@@ -78,8 +78,8 @@ class OverviewSection(View):
         context = {
             "assets": assets_data | assets_value_data,
             "orders": orders_data,
-            "staffs": staffs_data
-
+            "staffs": staffs_data,
+            "recent_activities": get_recent_activities()
         }
 
         return render(request, self.template_name, context)
