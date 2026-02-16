@@ -69,17 +69,24 @@ class OverviewSection(View):
             "current_quarter_value": numerize.numerize(assets["current_quarter_value"])
         }
 
+    def setup_recent_activities(self):
+        activities_qs = get_recent_activities()
+        activities = activities_qs.values()
+        print(activities)
+
     def get(self, request):
         assets_data = self.get_assets_count()
         orders_data = self.get_orders_count()
         staffs_data = self.get_staffs_count()
         assets_value_data = self.get_assets_value()
+
+        self.setup_recent_activities()
         
         context = {
             "assets": assets_data | assets_value_data,
             "orders": orders_data,
             "staffs": staffs_data,
-            "recent_activities": get_recent_activities()
+            "recent_activities": ""
         }
 
         return render(request, self.template_name, context)

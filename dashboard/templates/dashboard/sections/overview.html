@@ -93,8 +93,8 @@
                         </svg>
                     </div>
                     <div class="flex-1">
-                        <p class="font-medium text-gray-800">{{ activity.type }}</p>
-                        <p class="text-sm text-gray-600">MacBook Pro 16" - Serial: MBP2024001</p>
+                        <p class="font-medium text-gray-800">{{ activity.message|default:'' }}</p>
+                        <p class="text-sm text-gray-600">{{ activity.related_obj_name|default:'' }} - Serial: {{ activity.related_obj_serial|default:'' }}</p>
                     </div>
                     <span class="text-sm text-gray-500">2 hours ago</span>
                 </div>

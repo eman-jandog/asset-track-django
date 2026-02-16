@@ -21,13 +21,14 @@ class Activity(models.Model):
 
     message = models.TextField()
 
-    related_object_id = models.PositiveIntegerField(
+    related_object_name = models.CharField(
+        max_length=100,
         null=True,
         blank=True
     )
 
-    related_object_type = models.CharField(
-        max_length=50,
+    related_object_serial = models.CharField(
+        max_length=100,
         null=True,
         blank=True
     )

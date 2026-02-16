@@ -14,6 +14,8 @@ def log_activity(
         action=action,
         message=msg,
         user=user,
-        related_object_id=getattr(obj, "id", None),
-        related_object_type=obj.__class__.__name__ if obj else None
+        relate_obj_name = getattr(obj, "name", None),
+        related_object_serial= getattr(obj, "sn", None)
+        # related_object_id=getattr(obj, "id", None),
+        # related_object_nam=obj.__class__.__name__ if obj else None
     )
