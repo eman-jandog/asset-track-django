@@ -70,8 +70,8 @@ class OverviewSection(View):
         }
 
     def setup_recent_activities(self):
-        activities = get_recent_activities()
-        return
+        return get_recent_activities()
+
 
     def get(self, request):
         assets_data = self.get_assets_count()

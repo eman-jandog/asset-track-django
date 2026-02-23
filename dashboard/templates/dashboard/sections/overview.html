@@ -1,4 +1,4 @@
-
+{% load humanize %}
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <div class="bg-white p-6 rounded-xl shadow-sm border border-bd-primary">
@@ -85,6 +85,7 @@
             <h3 class="text-lg font-semibold text-gray-800">Recent Activity</h3>
         </div>
         <div class="p-6">
+            {% for activity in recent_activities %}
             <div class="space-y-4">
                 <div class="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
                     <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
@@ -94,11 +95,12 @@
                     </div>
                     <div class="flex-1">
                         <p class="font-medium text-gray-800">{{ activity.message|default:'' }}</p>
-                        <p class="text-sm text-gray-600">{{ activity.related_obj_name|default:'' }} - Serial: {{ activity.related_obj_serial|default:'' }}</p>
+                        <p class="text-sm text-gray-600">{{ activity.related_object_name|default:'' }} - Serial: {{ activity.related_object_serial|default:'' }}</p>
                     </div>
-                    <span class="text-sm text-gray-500">2 hours ago</span>
+                    <span class="text-sm text-gray-500">{{ activity.time_since|naturaltime }}</span>
                 </div>
             </div>
+            {% endfor %}
             <!-- <div class="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
                     <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
                         <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
