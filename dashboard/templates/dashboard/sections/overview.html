@@ -97,7 +97,7 @@
                         <p class="font-medium text-gray-800">{{ activity.message|default:'' }}</p>
                         <p class="text-sm text-gray-600">{{ activity.related_object_name|default:'' }} - Serial: {{ activity.related_object_serial|default:'' }}</p>
                     </div>
-                    <span class="text-sm text-gray-500">{{ activity.time_since|naturaltime }}</span>
+                    <span class="text-sm text-gray-500">{{ activity.time_since|naturaltime }} ago</span>
                 </div>
             </div>
             {% endfor %}

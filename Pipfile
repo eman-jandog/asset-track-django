@@ -16,6 +16,7 @@ python-decouple = "*"
 crispy-tailwind = "*"
 djangorestframework = "*"
 numerize = "*"
+humanize = "*"
 
 [dev-packages]
 

@@ -2,8 +2,8 @@ from django.db.models import F, ExpressionWrapper, DurationField
 from django.db.models.functions import Now
 from django.utils.timezone import now
 from django.shortcuts import get_object_or_404
-from datetime import timedelta
 from .models import Activity
+import humanize, datetime
 
 def get_recent_activities(limit=5, user=None):
 
@@ -13,6 +13,13 @@ def get_recent_activities(limit=5, user=None):
         return
 
     for activity in activities:
-        activity.time_since = now() - activity.created_at
+        time_difference = now() - activity.created_at
+        if time_difference < datetime.timedelta(days=1):
+            convert_time = humanize.naturaltime(time_difference)
+        else:
+            convert_time = humanize.naturalday(time_difference)
+            actual_time = convert_time.split(",")[0]
+
+        activity.time_since = actual_time
 
     return activities
