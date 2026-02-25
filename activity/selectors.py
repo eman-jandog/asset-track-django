@@ -16,6 +16,7 @@ def get_recent_activities(limit=5, user=None):
         time_difference = now() - activity.created_at
         if time_difference < datetime.timedelta(days=1):
             convert_time = humanize.naturaltime(time_difference)
+            actual_time = str(convert_time).replace('from now', '')
         else:
             convert_time = humanize.naturalday(time_difference)
             actual_time = convert_time.split(",")[0]
