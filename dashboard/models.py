@@ -21,8 +21,12 @@ class Staff(models.Model):
     start_date = models.DateField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
 
+    class Meta:
+        ordering = ["-start_date"]
+
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
+        
 
 class Asset(models.Model):
     ASSET_CATEGORY = [
@@ -59,6 +63,9 @@ class Asset(models.Model):
     description = models.TextField(null=True,blank=True)
     last_update = models.DateTimeField(auto_now=True, blank=True, null=True)
 
+    class Meta:
+        ordering = ["-date_purchase"]
+
     def __str__(self):
         return f"{self.name} ({self.track_id})" if self.track_id else self.name or f"Asset #{self.pk}"
     
@@ -89,6 +96,9 @@ class Order(models.Model):
     date_expected = models.DateField(null=True, blank=True)
     staff = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     instruction = models.TextField(null=True)
+
+    class Meta:
+        ordering = ["-date_ordered"]
 
     def __str__(self):
         return f'{self.track_id}'
