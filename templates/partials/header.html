@@ -8,17 +8,7 @@
                             <h2 id="pageTitle" class="text-lg font-bold text-gray-800">Dashboard Panel</h2>  
                         </div>
                         <div class="flex items-center space-x-4">
-                            <button class="p-2 text-gray-400 hover:text-gray-600 transition-colors">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4 19h6v-2H4v2zM4 15h8v-2H4v2zM4 11h10V9H4v2z"></path>
-                                </svg>
-                            </button>
-                            <button class="p-2 text-gray-400 hover:text-gray-600 transition-colors relative">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4 19h6v-2H4v2zM4 15h8v-2H4v2zM4 11h10V9H4v2z"></path>
-                                </svg>
-                                <span class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
-                            </button>
+                            {% include 'components/theme.html' %}
                         </div>
                     </div>
                 </header>
