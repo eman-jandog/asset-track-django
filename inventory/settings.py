@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     "crispy_bootstrap5",
     "crispy_tailwind",
+    "compressor",
     "debug_toolbar",
     "rest_framework",
 ]
@@ -131,6 +132,11 @@ USE_I18N = True
 
 USE_TZ = True
 
+COMPRESS_ROOT = BASE_DIR / 'static'
+
+COMPRESS_ENABLED = True
+
+STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/

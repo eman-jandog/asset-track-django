@@ -17,6 +17,7 @@ crispy-tailwind = "*"
 djangorestframework = "*"
 numerize = "*"
 humanize = "*"
+django-compressor = "*"
 
 [dev-packages]
 
