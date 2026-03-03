@@ -1,3 +1,4 @@
+{% load compress %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -8,13 +9,10 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.7/dist/htmx.min.js" integrity="sha384-ZBXiYtYQ6hJ2Y0ZNoYuI+Nq5MqWBr+chMrS/RkXpNzQCApHEhOt2aY8EJgqwHLkJ" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
-        <style type="text/tailwindcss">
-        @theme {
-            --color-primary: #3B82F6;
-            --color-secondary: #1E40AF;
-            --color-bd-primary: #e5e7eb;
-        }
-        </style>
+        {% compress css %}
+        <link rel="stylesheet"
+            href="{% static 'src/output.css' %}">
+        {% endcompress %}
         <title>{% block title %} AssetTrack {% endblock %}</title>
     </head>
     <body class="bg-gray-50 font-sans">
