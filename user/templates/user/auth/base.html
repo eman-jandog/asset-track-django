@@ -1,20 +1,16 @@
+{% load compress %}
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.7/dist/htmx.min.js" integrity="sha384-ZBXiYtYQ6hJ2Y0ZNoYuI+Nq5MqWBr+chMrS/RkXpNzQCApHEhOt2aY8EJgqwHLkJ" crossorigin="anonymous"></script>
-    <style type="text/tailwindcss">
-      @theme {
-        --color-primary: #3B82F6;
-        --color-secondary: #1E40AF;
-      }
-    </style>
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
     <title>AssetTrack Account</title>
 </head>
-<body class="bg-gray-50 font-sans">
+<body class="dark:bg-gray-50 font-sans">
         <div id="authContainer" class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-100">
         <div class="min-h-screen flex items-center justify-center py-4 px-4 sm:py-12 sm:px-6 lg:px-8">
             <div class="max-w-md w-full space-y-4 sm:space-y-8">

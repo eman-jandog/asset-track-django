@@ -222,7 +222,3 @@ main {
 .switch__input:checked ~ .switch__icon .switch__icon-part--11 {
 	transform: translateX(-50%) rotate(315deg) translateY(0.625em) scale(0);
 }
-body:has(.switch__input:checked) {
-	background-color: hsl(var(--hue),10%,10%);
-	color: hsl(var(--hue),10%,90%);
-}
