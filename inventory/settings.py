@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     "crispy_bootstrap5",
     "crispy_tailwind",
-    "debug_toolbar",
+    "compressor",
+    # "debug_toolbar",
     "rest_framework",
 ]
 
@@ -57,7 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    # "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'inventory.urls'
@@ -131,6 +132,11 @@ USE_I18N = True
 
 USE_TZ = True
 
+COMPRESS_ROOT = BASE_DIR / 'static'
+
+COMPRESS_ENABLED = True
+
+STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/

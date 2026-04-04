@@ -22,6 +22,7 @@ class LoginView(BaseLoginView):
 
 def index(request):
     return render(request, 'user/auth/page.html') 
+    # return render(request, 'index.html')
 
 def register(request):
     if request.method == 'POST':

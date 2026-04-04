@@ -1,22 +1,17 @@
+{% load compress %}
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.7/dist/htmx.min.js" integrity="sha384-ZBXiYtYQ6hJ2Y0ZNoYuI+Nq5MqWBr+chMrS/RkXpNzQCApHEhOt2aY8EJgqwHLkJ" crossorigin="anonymous"></script>
-    <style type="text/tailwindcss">
-      @theme {
-        --color-primary: #3B82F6;
-        --color-secondary: #1E40AF;
-      }
-    </style>
-    
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
     <title>AssetTrack Account</title>
 </head>
 <body class="bg-gray-50 font-sans">
-        <div id="authContainer" class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-100">
+    <div id="authContainer" class="min-h-screen dark:bg-gray-900">
         <div class="min-h-screen flex items-center justify-center py-4 px-4 sm:py-12 sm:px-6 lg:px-8">
             <div class="max-w-md w-full space-y-4 sm:space-y-8">
                 <!-- Header -->
@@ -26,26 +21,26 @@
                             <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
                         </svg>
                     </div>
-                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">AssetTrack</h2>
-                    <p class="mt-1 sm:mt-2 text-xs sm:text-sm text-gray-600">Professional Asset Management System</p>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">AssetTrack</h2>
+                    <p class="mt-1 sm:mt-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">Professional Asset Management System</p>
                 </div>
 
                 <!-- Toggle Buttons -->
-                <div class="flex bg-gray-100 rounded-lg p-1 mb-4 sm:mb-6" role="tablist"
+                <div class="flex bg-gray-100 dark:bg-gray-800 rounded-lg p-1 mb-4 sm:mb-6" role="tablist"
                     hx-target="#accountForm"
                     hx-on::after-on-load="
                         let currentTab = document.querySelector('[aria-selected=true]');
                         currentTab.setAttribute('aria-selected', 'false')
-                        currentTab.classList.remove('bg-white', 'text-primary', 'shadow-sm')    
+                        currentTab.classList.remove('bg-white', 'text-primary', 'shadow-sm', 'dark:bg-gray-950')    
                         currentTab.classList.add('text-gray-500', 'hover:text-gray-700')
                         let newTab = event.target
                         newTab.setAttribute('aria-selected', 'true')
-                        newTab.classList.add('bg-white', 'text-primary', 'shadow-sm')
+                        newTab.classList.add('bg-white', 'text-primary', 'shadow-sm', 'dark:bg-gray-950')
                         newTab.classList.remove('text-gray-500', 'hover:text-gray-700')">
-                    <button id="loginTab" hx-get="{% url 'user-login' %}" aria-selected="true" aria-controls="accountForm" class="flex-1 py-2 px-2 sm:px-4 text-xs sm:text-sm font-medium rounded-md transition-all duration-200 bg-white text-primary shadow-sm" role="tab">
+                    <button id="loginTab" hx-get="{% url 'user-login' %}" aria-selected="true" aria-controls="accountForm" class="flex-1 py-2 px-2 sm:px-4 text-xs sm:text-sm font-medium rounded-md transition-all duration-200 bg-white text-primary shadow-sm dark:bg-gray-950" role="tab">
                         Sign In
                     </button>
-                    <button id="registerTab" hx-get="{% url 'user-register' %}" aria-selected="false" aria-controls="accountForm" class="flex-1 py-2 px-2 sm:px-4 text-xs sm:text-sm font-medium rounded-md hover:text-gray-700 transition-all duration-200 text-gray-500" role="tab">
+                    <button id="registerTab" hx-get="{% url 'user-register' %}" aria-selected="false" aria-controls="accountForm" class="flex-1 py-2 px-2 sm:px-4 text-xs sm:text-sm font-medium rounded-md transition-all duration-200 text-gray-500 hover:text-gray-700" role="tab">
                         Sign Up
                     </button>
                 </div>

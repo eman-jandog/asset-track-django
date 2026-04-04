@@ -1,0 +1,10 @@
+/* static/src/input.css */
+
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #3B82F6;
+    --color-secondary: #1E40AF;
+};
+
+@custom-variant dark (&:where(.dark, .dark *));
